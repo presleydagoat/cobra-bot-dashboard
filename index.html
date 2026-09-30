@@ -72,14 +72,14 @@ nav button.on,nav button:hover{color:#fff;border-color:#fff}
 .tb td{padding:22px 10px;border-bottom:1px solid var(--ln)}.tb .f{font-size:16px}.mu{color:var(--st);font-size:14px}
 
 /* chat */
-.chat{display:grid;grid-template-columns:260px 1fr;border:1px solid var(--ln);height:calc(100vh - 250px);min-height:480px;background:var(--ink)}
-.side{overflow-y:auto;border-right:1px solid var(--ln);padding:10px}
+.chat{display:grid;grid-template-columns:260px minmax(0,1fr);grid-template-rows:minmax(0,1fr);border:1px solid var(--ln);height:calc(100vh - 230px);height:calc(100dvh - 230px);min-height:420px;background:var(--ink);overflow:hidden}
+.side{min-height:0;overflow-y:auto;border-right:1px solid var(--ln);padding:10px}
 .side h3{font-size:11px;color:var(--st);margin:16px 8px 6px}
 .side button{display:block;width:100%;text-align:left;padding:8px 10px;color:var(--st);font:500 14px Inter,sans-serif;letter-spacing:.02em;text-transform:none}
 .side button:hover,.side button.on{background:rgba(255,255,255,.1);color:#fff}
-.cm{display:flex;flex-direction:column;min-width:0}
+.cm{display:flex;flex-direction:column;min-width:0;min-height:0;position:relative}
 .chh{padding:14px 18px;border-bottom:1px solid var(--ln);font-size:13px}
-.msgs{flex:1;overflow-y:auto;padding:10px 6px}
+.msgs{flex:1 1 0;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:10px 6px}
 .msg{display:flex;gap:12px;padding:8px 12px;position:relative}.msg:hover{background:rgba(255,255,255,.05)}
 .av{width:38px;height:38px;background:var(--n2) center/cover;border:1px solid var(--ln);display:grid;place-items:center;font:700 15px 'Chakra Petch',sans-serif;flex:none}
 .msg .b{flex:1;min-width:0;word-break:break-word}.msg .n{font-weight:600}.msg small{color:var(--st);margin-left:8px;font-size:11px}
@@ -104,9 +104,22 @@ footer button{display:block;text-align:left;padding:10px 0;font-size:13px}footer
 .mo>div{background:var(--navy);border:1px solid var(--ln);padding:30px;width:100%;max-width:420px;display:grid;gap:18px}
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#fff;color:var(--navy);padding:12px 24px;font:700 12px 'Chakra Petch',sans-serif;letter-spacing:.14em;text-transform:uppercase;z-index:30;opacity:0;transition:.25s;pointer-events:none}
 #toast.on{opacity:1}
-@media(max-width:800px){.chat{grid-template-columns:1fr;grid-template-rows:150px 1fr}.side{border-right:0;border-bottom:1px solid var(--ln)}header{padding:0 12px;gap:10px}.pill{display:none}.sec{padding:56px 16px}.sl{aspect-ratio:auto}}
+@media(max-width:800px){.chat{grid-template-columns:1fr;grid-template-rows:140px minmax(0,1fr)}.side{border-right:0;border-bottom:1px solid var(--ln)}header{padding:0 12px;gap:10px}.pill{display:none}.sec{padding:56px 16px}.sl{aspect-ratio:auto}}
 .chip{border:1px solid var(--ln);padding:5px 12px;font-size:11px;margin:0}.chip:hover,.chip.on{background:#fff;color:var(--navy)}.cd h3{font-size:15px}.cd .row{gap:8px}.cd select,.cd input{font-size:14px}.tb select{padding:6px 2px;font-size:13px}
 #login .lc{text-align:left;padding:36px;border:1px solid var(--ln);background:var(--ink);animation:none}#login h1{margin:0 0 28px;font-size:34px}
+
+.msg .av{background-size:cover;background-position:center}.msg.g{padding-top:1px;padding-bottom:1px}.msg.g .av{visibility:hidden;height:0}.msg.g .n{display:none}
+.dd{display:flex;align-items:center;gap:12px;margin:14px 10px 6px;color:var(--st);font-size:11px;letter-spacing:.08em;text-transform:uppercase}.dd::before,.dd::after{content:"";flex:1;height:1px;background:var(--ln)}
+.msg pre{background:var(--ink);border:1px solid var(--ln);padding:8px 10px;margin:4px 0;white-space:pre-wrap;overflow-x:auto;font-size:13px}.msg code{background:var(--ink);padding:1px 5px;font-size:13px}.msg a{color:#9db4ff}
+.ce{height:22px;vertical-align:middle}.att{max-width:min(380px,100%);max-height:300px;display:block;margin-top:6px;border:1px solid var(--ln)}
+.emb{border-left:4px solid var(--st);background:var(--n2);padding:10px 12px;margin-top:6px;max-width:520px;font-size:14px}.emb .et{font-weight:600;margin-bottom:4px}.ef{margin-top:6px}
+#jump{position:absolute;left:50%;bottom:86px;transform:translateX(-50%);z-index:3;background:#fff;color:var(--navy);padding:8px 18px;font:700 11px 'Chakra Petch',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.bdg{float:right;background:#fff;color:var(--navy);border-radius:9px;padding:0 7px;font-size:11px;font-weight:700}.side button.un{color:#fff;font-weight:600}
+.comp textarea{border:1px solid var(--ln);padding:10px;resize:none;max-height:140px;min-height:42px;line-height:1.4}
+.chip2{border:1px solid var(--ln);padding:2px 8px;font-size:12px;margin:0 6px 4px 0;display:inline-block}
+.fg{display:grid;gap:18px;max-width:820px;margin:auto}.fg label{display:block;margin-bottom:4px}.fg .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.ck{display:flex;align-items:center;gap:10px}.ck input{width:auto}
+.mo>div.wide{max-width:520px}
 </style>
 </head><body>
 <section id="login"><div class="lc"><h1>Sign in</h1>
@@ -120,7 +133,7 @@ footer button{display:block;text-align:left;padding:10px 0;font-size:13px}footer
 
 <div class="tab on" id="t-home">
  <div class="sec" style="padding-bottom:0"><div class="in"><div class="row" style="gap:22px"><div class="av" id="hav" style="width:84px;height:84px"></div><div style="flex:1;min-width:220px"><div class="mu f" id="tg"></div><h1 id="hn" style="font-size:clamp(30px,6vw,50px);line-height:1.1"></h1><div class="mu" id="hud"></div></div><button class="nb" data-go="comms">Open messages</button></div></div></div>
- <div class="sec"><div class="in"><h2 class="sh">Overview</h2><div class="st4"><div><b id="s1">–</b><span class="f">Servers</span></div><div><b id="s2">–</b><span class="f">Total members</span></div><div><b id="s3">–</b><span class="f">Slash commands</span></div><div><b id="s5">–</b><span class="f">Open DMs</span></div></div></div></div>
+ <div class="sec"><div class="in"><h2 class="sh">Overview</h2><div class="st4"><div><b id="s1">-</b><span class="f">Servers</span></div><div><b id="s2">-</b><span class="f">Total members</span></div><div><b id="s3">-</b><span class="f">Chat commands</span></div><div><b id="s5">-</b><span class="f">Open DMs</span></div></div></div></div>
  <div class="sec ch"><div class="in"><h2 class="sh">Presence</h2>
   <div class="row" id="stb" style="margin-bottom:26px"><button class="sb f" data-s="online"><i class="dot online"></i>Online</button><button class="sb f" data-s="idle"><i class="dot idle"></i>Idle</button><button class="sb f" data-s="dnd"><i class="dot dnd"></i>Do not disturb</button><button class="sb f" data-s="invisible"><i class="dot offline"></i>Offline</button></div>
   <div class="row"><select id="at" style="width:190px"><option>Playing</option><option>Listening</option><option>Watching</option><option>Competing</option></select><input id="ax" style="flex:1;min-width:220px" placeholder="Activity text"><button class="nb s" id="aset">Apply</button><button class="nb s d" id="aclr">Clear</button></div></div></div>
@@ -129,19 +142,27 @@ footer button{display:block;text-align:left;padding:10px 0;font-size:13px}footer
 <div class="tab" id="t-srv"><div class="sec"><div class="in"><h2 class="sh">Servers</h2><table class="tb" id="tb"></table><div style="text-align:center;margin-top:24px"><button class="nb" id="sinv">Add bot to a server</button></div></div></div></div>
 
 <div class="tab" id="t-comms"><div class="sec"><div class="in"><h2 class="sh">Messages</h2>
- <div class="chat"><div class="side" id="side"></div><div class="cm"><div class="chh f" id="chh">No channel selected</div><div class="msgs" id="msgs"></div>
- <div class="comp"><div id="rbar"></div><div class="row"><input id="mi" style="flex:1" placeholder="Message as the bot"><button class="nb s" id="send">Send</button></div></div></div></div></div></div></div>
+ <div class="chat"><div class="side" id="side"></div><div class="cm"><div class="chh f" id="chh">No channel selected</div><div class="msgs" id="msgs"></div><button id="jump" class="hidden">Jump to latest</button>
+ <div class="comp"><div id="rbar"></div><div id="fchips"></div><div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="file" id="fi" multiple class="hidden"><button class="nb s" id="att">Attach</button><textarea id="mi" rows="1" placeholder="Message as the bot (Enter to send, Shift+Enter for a new line)" style="flex:1"></textarea><button class="nb s" id="send">Send</button></div></div></div></div></div></div></div>
 
 <div class="tab" id="t-mem"><div class="sec"><div class="in"><h2 class="sh">Members</h2>
  <div class="row" style="margin-bottom:14px"><select id="ms" style="width:240px"></select><input id="mq" placeholder="Search members" style="flex:1;min-width:200px"><button class="nb s" id="mre">Reload</button></div>
  <table class="tb" id="mt"></table><h2 class="sh" style="margin-top:56px">Ban list</h2><table class="tb" id="bt"></table></div></div></div>
 
-<div class="tab" id="t-cmds"><div class="sec"><div class="in"><h2 class="sh">Slash commands</h2><p class="mu" style="text-align:center;margin:-20px 0 26px">These are the commands registered with Discord for your bot. They are built in the bot code.</p><input id="cq" placeholder="Search commands"><div class="cg" id="cg"></div></div></div></div>
+<div class="tab" id="t-cases"><div class="sec"><div class="in"><h2 class="sh">Moderation cases</h2>
+ <div class="row" style="margin-bottom:14px"><select id="cs" style="width:240px"></select><select id="ct" style="width:170px"><option value="">All types</option></select><input id="cq2" placeholder="Search user, moderator or reason" style="flex:1;min-width:200px"></div><table class="tb" id="ctb"></table></div></div></div>
+
+<div class="tab" id="t-cmds"><div class="sec"><div class="in"><h2 class="sh">Chat commands</h2><p class="mu" id="cpre" style="text-align:center;margin:-20px 0 26px"></p>
+ <div class="row" style="margin-bottom:14px"><select id="cgs" style="width:240px"></select><input id="cq" placeholder="Search commands" style="flex:1;min-width:200px"></div><div class="row" id="cf" style="margin-bottom:8px"></div><div class="cg" id="cg"></div></div></div></div>
 
 <div class="tab" id="t-tools"><div class="sec"><div class="in"><h2 class="sh">Channel tools</h2><div class="cg" style="margin-top:0">
  <div class="cd" id="cpn"><h3 class="f">Manage a channel</h3><select id="tc"></select><input id="tv" placeholder="Value (amount, seconds, or name)"><div class="row"><button class="nb s" data-b="purge">Purge</button><button class="nb s" data-b="slowmode">Slowmode</button><button class="nb s" data-b="lock">Lock</button><button class="nb s" data-b="unlock">Unlock</button><button class="nb s" data-b="rename">Rename</button><button class="nb s" data-b="topic">Set topic</button><button class="nb s" data-b="create">Create channel</button><button class="nb s d" data-b="delete">Delete</button></div></div>
  <div class="cd" id="apn"><h3 class="f">Send an announcement</h3><select id="ac"></select><input id="atl" placeholder="Title"><textarea id="ads" rows="3" placeholder="Message" style="width:100%"></textarea><input id="acl" placeholder="Color (hex, e.g. #2b3a67)"><div class="row"><button class="nb s" data-b="embed">Send as embed</button><button class="nb s" data-b="plain">Send as plain text</button></div></div>
 </div></div></div></div>
+
+<div class="tab" id="t-set"><div class="sec"><div class="in"><h2 class="sh">Server settings</h2><div class="fg"><select id="sgs"></select><div class="two" id="sform"></div>
+ <h3 class="f" style="margin-top:16px">Reason templates (one per line)</h3><p class="mu" style="margin-top:-10px">Used in the ban, kick, timeout, warn and unban windows, and in chat with -t NUMBER, like .ban @user -t 2</p><div class="two" id="tform"></div>
+ <div><button class="nb" id="ssave">Save settings</button></div></div></div></div></div>
 
 <div class="tab" id="t-id"><div class="sec"><div class="in"><h2 class="sh">Bot identity</h2><div class="fm">
  <div class="row" style="gap:24px"><div class="av" id="pav" style="width:110px;height:110px"></div><div><input type="file" id="pf" accept="image/*" class="hidden"><button class="nb s" onclick="pf.click()">Change avatar</button></div></div>
@@ -150,6 +171,7 @@ footer button{display:block;text-align:left;padding:10px 0;font-size:13px}footer
 </div>
 
 <div class="mo hidden" id="fmo"><div><h3>Forward message</h3><div class="mu" id="fp"></div><select id="fs"></select><div class="row"><button class="nb s" id="fg">Forward</button><button class="nb s d" id="fx">Cancel</button></div></div></div>
+<div class="mo hidden" id="mmo"><div class="wide"><h3 id="mtl"></h3><div class="mu" id="mwho"></div><div><label class="mu">Reason template</label><select id="mtp"></select></div><div><label class="mu">Reason</label><textarea id="mr" rows="3" style="width:100%"></textarea></div><div id="mx"></div><div class="row"><button class="nb s" id="mok">Confirm</button><button class="nb s d" id="mno">Cancel</button></div></div></div>
 <div id="toast"></div>
 <script>
 const DEFAULT_API=""; // optional: put your Render URL here so the login box is pre-filled
@@ -157,15 +179,18 @@ const $=i=>document.getElementById(i),esc=s=>String(s==null?"":s).replace(/[&<>"
 const toast=t=>{const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove("on"),2400)};
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}};
 let API=ls("cobra-api")||DEFAULT_API,TOK="";try{TOK=sessionStorage.getItem("cobra-tok")||""}catch(e){}
-const S={me:null,guilds:[],dms:[],cur:null,reply:null,msgs:[],members:[],roles:[],bans:[],cmds:null,tab:"home",fresh:false,filled:false,av:null};
-let last="",fw=null;
+const S={me:null,guilds:[],dms:[],cur:null,reply:null,msgs:[],members:[],roles:[],bans:[],cfg:{},cmds:[],cases:[],tab:"home",filled:false,av:null,unread:{},files:[],noMore:false,stick:true,newc:0,es:null,cat:""};
+let fw=null,mod=null;
 async function api(p,m,b){const r=await fetch(API+p,{method:m||"GET",headers:Object.assign({"Content-Type":"application/json"},TOK?{Authorization:"Bearer "+TOK}:{}),body:b?JSON.stringify(b):undefined});
  if(r.status===401){try{sessionStorage.removeItem("cobra-tok")}catch(e){}toast("Session expired. Sign in again.");setTimeout(()=>location.reload(),1200);throw new Error("Session expired")}
  const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Request failed ("+r.status+")");return j}
 const T=async(f,ok)=>{try{const r=await f();if(ok)toast(ok);return r}catch(e){toast(e.message||"Something went wrong")}};
+const soft=(p,d)=>p.catch(()=>d===undefined?[]:d);
 const err=t=>{$("err").textContent=t};
 $("ub").value=API;
-async function doLogin(){const b=$("ub").value.trim().replace(/\/+$/,"");if(!/^https?:\/\//.test(b))return err("Enter the full backend URL, starting with https://");
+async function doLogin(){let b=$("ub").value.trim();if(!b)return err("Enter your backend URL.");if(!/^https?:\/\//.test(b))b="https://"+b;
+ try{b=new URL(b).origin}catch(e){return err("That doesn't look like a valid URL.")}
+ if(/xxxx/i.test(b))return err("Replace xxxx with your real Render address.");$("ub").value=b;
  err("");$("go").textContent="Connecting…";API=b;ls("cobra-api",b);
  try{const r=await fetch(API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({u:$("u").value.trim(),p:$("p").value})});const j=await r.json().catch(()=>({}));
   if(!r.ok){err(j.error||"Login failed");$("go").textContent="Sign in";return}
@@ -174,19 +199,22 @@ async function doLogin(){const b=$("ub").value.trim().replace(/\/+$/,"");if(!/^h
 $("go").onclick=doLogin;$("p").onkeydown=e=>{if(e.key==="Enter")doLogin()};
 $("out").onclick=()=>{try{sessionStorage.removeItem("cobra-tok")}catch(e){}location.reload()};
 
-const NAV=[["home","Overview"],["srv","Servers"],["comms","Messages"],["mem","Members"],["cmds","Commands"],["tools","Tools"],["id","Identity"]];
-function go(t){S.tab=t;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x.id=="t-"+t));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go==t));scrollTo(0,0);if(t=="comms")loadMsgs(true);if(t=="mem")loadMem();if(t=="cmds")loadCmds()}
+const NAV=[["home","Overview"],["srv","Servers"],["comms","Messages"],["mem","Members"],["cases","Cases"],["cmds","Commands"],["tools","Tools"],["set","Settings"],["id","Identity"]];
+function go(t){S.tab=t;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x.id=="t-"+t));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go==t));scrollTo(0,0);
+ if(t=="comms"){const el=$("msgs");if(S.stick)el.scrollTop=el.scrollHeight;updJump()}if(t=="mem")loadMem();if(t=="cases")loadCases();if(t=="cmds")loadCmds();if(t=="set")loadSet()}
 document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)go(g.dataset.go)});
 
 async function enter(){$("login").classList.add("hidden");$("app").classList.remove("hidden");
  $("nav").innerHTML=NAV.map((t,i)=>`<button data-go="${t[0]}" class="${i?"":"on"}">${t[1]}</button>`).join("");
  bind();try{await refresh()}catch(e){toast(e.message)}
- api("/api/commands").then(r=>{S.cmds=r;$("s3").textContent=r.length}).catch(()=>{});
- setInterval(()=>{if(S.tab=="comms")loadMsgs()},4000);setInterval(()=>refresh().catch(()=>{}),45000)}
-async function refresh(){const[me,g,d]=await Promise.all([api("/api/me"),api("/api/guilds"),api("/api/dms")]);S.me=me;S.guilds=g;S.dms=d;paint();srvT();side();fillSel()}
+ startStream();setInterval(()=>refresh().catch(()=>{}),60000);
+ document.addEventListener("visibilitychange",()=>{if(!document.hidden)mergeLatest()})}
+async function refresh(){const[me,g,d]=await Promise.all([api("/api/me"),api("/api/guilds"),api("/api/dms")]);S.me=me;S.guilds=g;S.dms=d;paint();srvT();side();fillSel();
+ if(!S.cmdN){const gid=g[0]&&g[0].id;if(gid)soft(api(`/api/guilds/${gid}/commands`),[]).then(c=>{S.cmdN=c.length;$("s3").textContent=c.length})}}
 const chanOpts=()=>S.guilds.map(g=>g.channels.map(c=>`<option value="${c.id}">${esc(g.name)} #${esc(c.name)}</option>`).join("")).join("");
-function fillSel(){const v=[$("ms").value,$("tc").value,$("ac").value];$("ms").innerHTML=S.guilds.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("");$("tc").innerHTML=$("ac").innerHTML=chanOpts();
- if(v[0])$("ms").value=v[0];if(v[1])$("tc").value=v[1];if(v[2])$("ac").value=v[2]}
+function fillSel(){const ids=["ms","cs","cgs","sgs"],v=ids.map(i=>$(i).value),o=S.guilds.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("");
+ ids.forEach((i,k)=>{$(i).innerHTML=o;if(v[k])$(i).value=v[k]});
+ const t=[$("tc").value,$("ac").value];$("tc").innerHTML=$("ac").innerHTML=chanOpts();if(t[0])$("tc").value=t[0];if(t[1])$("ac").value=t[1]}
 function paint(){const m=S.me;if(!m)return;const st={online:"Online",idle:"Idle",dnd:"Do not disturb",invisible:"Offline",offline:"Offline"}[m.status]||m.status,sk=m.status=="invisible"?"offline":m.status;
  $("bn").textContent=$("hn").textContent=m.name;$("tg").textContent="Status: "+st;$("hp").innerHTML=`<i class="dot ${sk}"></i>${st}`;
  $("hud").textContent=(m.activity&&m.activity.text?m.activity.type+" "+m.activity.text:"No activity set")+(m.bio?" · "+m.bio:"");
@@ -197,41 +225,107 @@ function paint(){const m=S.me;if(!m)return;const st={online:"Online",idle:"Idle"
 async function setPres(status,type,text){status=status=="offline"?"invisible":status;const r=await T(()=>api("/api/presence","POST",{status,type,text}),"Presence updated");if(r){S.me.status=status;S.me.activity=text?{type,text}:null;paint()}}
 function srvT(){$("tb").innerHTML=S.guilds.map((g,i)=>`<tr><td class="f mu" style="width:60px">${String(i+1).padStart(2,"0")}</td><td class="f">${esc(g.name)}</td><td class="mu">${g.members.toLocaleString()} members</td><td class="mu">${g.channels.length} text channels</td><td><div class="row" style="justify-content:flex-end"><button class="nb s d" data-l="${g.id}">Leave</button></div></td></tr>`).join("")||'<tr><td class="mu">The bot is not in any server yet. Use "Add bot to a server".</td></tr>'}
 
-/* ---- messages ---- */
-function side(){let h="";S.guilds.forEach(g=>{h+=`<h3>${esc(g.name)}</h3>`+g.channels.map(c=>`<button data-k="c,${g.id},${c.id}" class="${S.cur&&S.cur.id==c.id?"on":""}"># ${esc(c.name)}</button>`).join("")});
- h+="<h3>Direct messages</h3>"+S.dms.map(d=>`<button data-k="d,${d.id}" class="${S.cur&&S.cur.id==d.id?"on":""}">@ ${esc(d.name)}</button>`).join("")+'<button data-k="new">+ Message a user by ID</button>';$("side").innerHTML=h}
-function openThread(t){S.cur=t;S.reply=null;S.fresh=true;last="";$("chh").textContent=t.title;rb();side();loadMsgs(true)}
-async function loadMsgs(force){if(!S.cur)return;const id=S.cur.id;try{const ms=await api(`/api/channels/${id}/messages`);if(!S.cur||S.cur.id!=id)return;const j=JSON.stringify(ms);if(j==last&&!force)return;last=j;S.msgs=ms;msgR()}catch(e){if(force)toast(e.message)}}
-function msgR(){const el=$("msgs"),near=el.scrollHeight-el.scrollTop-el.clientHeight<140;
- el.innerHTML=S.msgs.map(m=>{const rp=m.reply?S.msgs.find(x=>x.id==m.reply):null;
-  return `<div class="msg" data-i="${m.id}"><div class="av">${esc((m.author||"?")[0].toUpperCase())}</div><div class="b">${rp?`<div class="rp">↩ ${esc(rp.author)}: ${esc(rp.content.slice(0,60))}</div>`:m.reply?'<div class="rp">↩ reply</div>':""}<div class="n">${esc(m.author)}${m.bot?'<span class="tag">BOT</span>':""}<small>${new Date(m.time).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}${m.edited?" (edited)":""}${m.pinned?" · pinned":""}</small></div><div>${esc(m.content).replace(/\n/g,"<br>")}</div>${m.attachments.map(a=>`<div><a href="${esc(a.url)}" target="_blank" rel="noopener" style="color:var(--st)">${esc(a.name)}</a></div>`).join("")}${m.embeds.map(e=>`<div class="mu">[embed] ${esc(e)}</div>`).join("")}${m.reactions.map(r=>`<span class="rx" data-r="${esc(r.emoji)}">${esc(r.emoji)} ${r.count}</span>`).join("")}</div>
-  <div class="act f"><button data-a="re">Reply</button><button data-a="rx">React</button>${m.self?'<button data-a="ed">Edit</button>':""}<button data-a="pin">${m.pinned?"Unpin":"Pin"}</button><button data-a="fw">Forward</button><button data-a="cp">Copy</button><button data-a="del">Delete</button></div></div>`}).join("")||'<div class="mu" style="padding:20px">'+(S.cur?"No messages here yet.":"Pick a channel on the left.")+"</div>";
- if(near||S.fresh){el.scrollTop=1e9;S.fresh=false}}
-const rb=()=>{$("rbar").innerHTML=S.reply?`Replying to ${esc(S.reply.author)} <a href="#" id="rcl" style="color:#ff8a8e">✕</a>`:""};
-const fwOpts=()=>chanOpts()+S.dms.map(d=>`<option value="${d.id}">DM @${esc(d.name)}</option>`).join("");
-async function sendMsg(){const t=$("mi").value.trim();if(!t)return;if(!S.cur)return toast("Pick a channel first");
- const r=await T(()=>api(`/api/channels/${S.cur.id}/messages`,"POST",{content:t,replyTo:S.reply?S.reply.id:undefined}));if(r){$("mi").value="";S.reply=null;rb();S.fresh=true;loadMsgs(true)}}
+/* ---------- live updates ---------- */
+function startStream(){if(S.es)S.es.close();const es=new EventSource(API+"/api/stream?token="+encodeURIComponent(TOK));S.es=es;
+ es.onopen=()=>mergeLatest();es.onmessage=e=>{let d;try{d=JSON.parse(e.data)}catch(x){return}onEvent(d)}}
+function onEvent(d){const cur=S.cur&&S.cur.id;
+ if(d.t=="new"){const m=d.m;
+  if(d.dm&&!S.dms.find(x=>x.id==m.ch)){S.dms.push({id:m.ch,name:d.name||"Unknown user"});$("s5").textContent=S.dms.length}
+  if(cur==m.ch){if(!S.msgs.find(x=>x.id==m.id)){S.msgs.push(m);msgR({fresh:true,mine:m.self})}}
+  else if(!m.self){S.unread[m.ch]=(S.unread[m.ch]||0)+1;side()}}
+ if(d.t=="upd"&&cur==d.m.ch){const i=S.msgs.findIndex(x=>x.id==d.m.id);if(i>=0){S.msgs[i]=d.m;msgR({})}}
+ if(d.t=="del"&&cur==d.ch){S.msgs=S.msgs.filter(x=>x.id!=d.id);msgR({})}
+ if(d.t=="bulk"&&cur==d.ch){S.msgs=S.msgs.filter(x=>!d.ids.includes(x.id));msgR({})}}
 
-/* ---- members ---- */
-const AC=[["kick","Kick"],["ban","Ban"],["timeout","Timeout"],["untimeout","Remove timeout"],["nickname","Set nickname"],["addrole","Add role"],["removerole","Remove role"],["dm","Message"]];
+/* ---------- messages ---------- */
+function side(){const cat={};let h="";
+ S.guilds.forEach(g=>{h+=`<h3>${esc(g.name)}</h3>`;let last=null;g.channels.forEach(c=>{if(c.cat&&c.cat!==last){h+=`<div class="mu" style="padding:6px 10px 0;font-size:11px;text-transform:uppercase">${esc(c.cat)}</div>`;last=c.cat}
+  const u=S.unread[c.id];h+=`<button data-k="c,${g.id},${c.id}" class="${S.cur&&S.cur.id==c.id?"on":""} ${u?"un":""}"># ${esc(c.name)}${u?`<span class="bdg">${u}</span>`:""}</button>`})});
+ h+="<h3>Direct messages</h3>"+S.dms.map(d=>{const u=S.unread[d.id];return `<button data-k="d,${d.id}" class="${S.cur&&S.cur.id==d.id?"on":""} ${u?"un":""}">@ ${esc(d.name)}${u?`<span class="bdg">${u}</span>`:""}</button>`}).join("")+'<button data-k="new">+ Message a user by ID</button>';$("side").innerHTML=h}
+async function openThread(t){S.cur=t;S.reply=null;S.msgs=[];S.noMore=false;S.stick=true;S.newc=0;S.unread[t.id]=0;$("chh").textContent=t.title;rb();side();msgR({first:true});
+ try{const l=await api(`/api/channels/${t.id}/messages`);if(!S.cur||S.cur.id!=t.id)return;S.msgs=l;S.noMore=l.length<50;msgR({first:true})}catch(e){toast(e.message)}}
+async function mergeLatest(){if(!S.cur)return;const id=S.cur.id;try{const l=await api(`/api/channels/${id}/messages`);if(!S.cur||S.cur.id!=id)return;const map=new Map(S.msgs.map(m=>[m.id,m]));l.forEach(m=>map.set(m.id,m));S.msgs=[...map.values()].sort((a,b)=>a.time-b.time);msgR({fresh:true})}catch(e){}}
+async function loadOlder(){if(S.noMore||S.loadingOlder||!S.cur||!S.msgs.length)return;S.loadingOlder=true;const id=S.cur.id;
+ try{const o=await api(`/api/channels/${id}/messages?before=${S.msgs[0].id}`);if(!S.cur||S.cur.id!=id)return;if(o.length<50)S.noMore=true;if(o.length){S.msgs=o.concat(S.msgs);msgR({older:true})}else msgR({older:true})}catch(e){}finally{S.loadingOlder=false}}
+const dayLabel=d=>{const t=new Date(),y=new Date(Date.now()-864e5);return d.toDateString()==t.toDateString()?"Today":d.toDateString()==y.toDateString()?"Yesterday":d.toLocaleDateString([],{weekday:"long",month:"long",day:"numeric",year:"numeric"})};
+function md(s){const B=[];s=esc(s).replace(/```([\s\S]*?)```/g,(_,c)=>{B.push(c.replace(/^\w*\n/,""));return "\u0000"+(B.length-1)+"\u0000"});
+ s=s.replace(/`([^`\n]+)`/g,"<code>$1</code>").replace(/\*\*([^*\n]+)\*\*/g,"<b>$1</b>").replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<i>$2</i>").replace(/__([^_\n]+)__/g,"<u>$1</u>").replace(/~~([^~\n]+)~~/g,"<s>$1</s>");
+ s=s.replace(/&lt;a?:(\w+):(\d+)&gt;/g,'<img class="ce" alt=":$1:" src="https://cdn.discordapp.com/emojis/$2.png?size=48">').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>').replace(/\n/g,"<br>");
+ return s.replace(/\u0000(\d+)\u0000/g,(_,i)=>`<pre>${B[i]}</pre>`)}
+const emb=e=>`<div class="emb" style="border-left-color:${esc(e.color||"#2b3a67")}">${e.title?`<div class="et">${e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.title)}</a>`:esc(e.title)}</div>`:""}${e.description?`<div>${md(e.description)}</div>`:""}${e.fields.map(f=>`<div class="ef"><b>${esc(f.name)}</b><div>${md(f.value)}</div></div>`).join("")}${e.image?`<img class="att" src="${esc(e.image)}" alt="">`:""}${e.footer?`<div class="mu" style="margin-top:6px">${esc(e.footer)}</div>`:""}</div>`;
+function msgHtml(m,grp){const rp=m.reply?S.msgs.find(x=>x.id==m.reply):null,t=new Date(m.time);
+ return `<div class="msg${grp?" g":""}" data-i="${m.id}"><div class="av" style="background-image:url(${esc(m.avatar)})"></div><div class="b">${rp?`<div class="rp">↩ ${esc(rp.author)}: ${esc(rp.content.slice(0,60))}</div>`:m.reply?'<div class="rp">↩ reply</div>':""}<div class="n"><span style="${m.color?"color:"+esc(m.color):""}">${esc(m.author)}</span>${m.bot?'<span class="tag">BOT</span>':""}<small title="${esc(t.toLocaleString())}">${t.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}${m.edited?" (edited)":""}${m.pinned?" · pinned":""}</small></div>${m.content?`<div>${md(m.content)}</div>`:""}${m.attachments.map(a=>a.type.startsWith("image/")?`<a href="${esc(a.url)}" target="_blank" rel="noopener noreferrer"><img class="att" src="${esc(a.url)}" alt="${esc(a.name)}"></a>`:`<div><a href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.name)}</a> <span class="mu">${(a.size/1024).toFixed(0)} KB</span></div>`).join("")}${m.embeds.map(emb).join("")}${m.reactions.map(r=>`<span class="rx" data-r="${esc(r.emoji)}">${md(r.emoji)} ${r.count}</span>`).join("")}</div>
+ <div class="act f"><button data-a="re">Reply</button><button data-a="rx">React</button>${m.self?'<button data-a="ed">Edit</button>':""}<button data-a="pin">${m.pinned?"Unpin":"Pin"}</button><button data-a="fw">Forward</button><button data-a="cp">Copy</button><button data-a="del">Delete</button></div></div>`}
+function msgHtmlAll(){let h=S.noMore&&S.msgs.length?'<div class="mu" style="text-align:center;padding:16px">This is the start of the conversation.</div>':"",prev=null;
+ for(const m of S.msgs){const ds=new Date(m.time).toDateString();if(!prev||prev.ds!=ds)h+=`<div class="dd"><span>${dayLabel(new Date(m.time))}</span></div>`;
+  h+=msgHtml(m,!!(prev&&prev.ds==ds&&prev.m.authorId==m.authorId&&m.time-prev.m.time<3e5&&!m.reply&&!prev.m.embeds.length));prev={m,ds}}
+ return h||'<div class="mu" style="padding:20px">'+(S.cur?"No messages here yet.":"Pick a channel on the left.")+"</div>"}
+function msgR(o){o=o||{};const el=$("msgs"),dist=el.scrollHeight-el.scrollTop-el.clientHeight,atBottom=dist<90,pt=el.scrollTop,ph=el.scrollHeight;
+ el.innerHTML=msgHtmlAll();
+ if(o.older){el.scrollTop=pt+(el.scrollHeight-ph)}
+ else if(o.first||o.mine||(atBottom&&S.stick)){el.scrollTop=el.scrollHeight;S.stick=true;S.newc=0}
+ else{el.scrollTop=pt;if(o.fresh&&!atBottom)S.newc++}
+ updJump()}
+function updJump(){const el=$("msgs"),far=el.scrollHeight-el.scrollTop-el.clientHeight>220;$("jump").classList.toggle("hidden",!far);$("jump").textContent=S.newc?S.newc+" new message"+(S.newc>1?"s":"")+" · Jump to latest":"Jump to latest"}
+const rb=()=>{$("rbar").innerHTML=S.reply?`Replying to ${esc(S.reply.author)} <a href="#" id="rcl" style="color:#ff8a8e">✕</a>`:""};
+const chips=()=>{$("fchips").innerHTML=S.files.map((f,i)=>`<span class="chip2">${esc(f.name)} <a href="#" data-x="${i}" style="color:#ff8a8e">✕</a></span>`).join("")};
+const fwOpts=()=>chanOpts()+S.dms.map(d=>`<option value="${d.id}">DM @${esc(d.name)}</option>`).join("");
+async function sendMsg(){const t=$("mi").value.trim();if(!t&&!S.files.length)return;if(!S.cur)return toast("Pick a channel first");
+ const files=await Promise.all(S.files.map(f=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r({name:f.name,data:fr.result});fr.readAsDataURL(f)})));
+ const r=await T(()=>api(`/api/channels/${S.cur.id}/messages`,"POST",{content:t||undefined,replyTo:S.reply?S.reply.id:undefined,files:files.length?files:undefined}));
+ if(r){$("mi").value="";$("mi").style.height="";S.reply=null;S.files=[];rb();chips();if(!S.msgs.find(x=>x.id==r.id))S.msgs.push(r);msgR({mine:true})}}
+
+/* ---------- members + moderation window ---------- */
+const AC=[["kick","Kick"],["ban","Ban"],["tempban","Temporary ban"],["softban","Softban"],["warn","Warn"],["timeout","Timeout"],["untimeout","Remove timeout"],["note","Add note"],["nickname","Set nickname"],["addrole","Add role"],["removerole","Remove role"],["dm","Message"]];
 async function loadMem(){const g=$("ms").value;if(!g){$("mt").innerHTML='<tr><td class="mu">The bot is not in any server yet.</td></tr>';return}
- $("mt").innerHTML='<tr><td class="mu">Loading…</td></tr>';const soft=p=>p.catch(()=>[]);
- try{[S.members,S.roles,S.bans]=await Promise.all([api(`/api/guilds/${g}/members`),soft(api(`/api/guilds/${g}/roles`)),soft(api(`/api/guilds/${g}/bans`))])}catch(e){toast(e.message);S.members=[];S.roles=[];S.bans=[]}memR()}
+ $("mt").innerHTML='<tr><td class="mu">Loading…</td></tr>';
+ try{[S.members,S.roles,S.bans,S.cfg]=await Promise.all([api(`/api/guilds/${g}/members`),soft(api(`/api/guilds/${g}/roles`)),soft(api(`/api/guilds/${g}/bans`)),soft(api(`/api/guilds/${g}/config`),{})])}catch(e){toast(e.message);S.members=[];S.roles=[];S.bans=[]}memR()}
 function memR(){const q=$("mq").value.toLowerCase();
- $("mt").innerHTML=S.members.map((m,k)=>(m.name+m.username).toLowerCase().includes(q)?`<tr><td class="f">${esc(m.name)}${m.bot?'<span class="tag">BOT</span>':""}${m.timedOut?'<span class="tag">timed out</span>':""}</td><td class="mu">${esc(m.roles.slice(0,3).join(", "))}</td><td><div class="row" style="justify-content:flex-end;flex-wrap:nowrap"><select style="width:160px">${AC.map(a=>`<option value="${a[0]}">${a[1]}</option>`).join("")}</select><button class="nb s" data-m="${k}">Apply</button></div></td></tr>`:"").join("")||'<tr><td class="mu">No members found.</td></tr>';
- $("bt").innerHTML=S.bans.map(b=>`<tr><td class="f">${esc(b.name)}</td><td class="mu">${esc(b.reason)}</td><td style="text-align:right"><button class="nb s" data-u="${b.id}">Unban</button></td></tr>`).join("")||'<tr><td class="mu">No banned members.</td></tr>'}
-async function doMember(m,a){const g=$("ms").value,body={};
+ $("mt").innerHTML=S.members.map((m,k)=>(m.name+m.username).toLowerCase().includes(q)?`<tr><td class="f">${esc(m.name)}${m.bot?'<span class="tag">BOT</span>':""}${m.timedOut?'<span class="tag">timed out</span>':""}${m.warns?`<span class="tag">${m.warns} warn</span>`:""}</td><td class="mu">${esc(m.roles.slice(0,3).join(", "))}</td><td><div class="row" style="justify-content:flex-end;flex-wrap:nowrap"><select style="width:170px">${AC.map(a=>`<option value="${a[0]}">${a[1]}</option>`).join("")}</select><button class="nb s" data-m="${k}">Apply</button></div></td></tr>`:"").join("")||'<tr><td class="mu">No members found.</td></tr>';
+ $("bt").innerHTML=S.bans.map(b=>`<tr><td class="f">${esc(b.name)}</td><td class="mu">${esc(b.reason)}</td><td style="text-align:right"><button class="nb s" data-u="${b.id}" data-n="${esc(b.name)}">Unban</button></td></tr>`).join("")||'<tr><td class="mu">No banned members.</td></tr>'}
+const DUR=[["5 minutes",5],["10 minutes",10],["1 hour",60],["6 hours",360],["1 day",1440],["7 days",10080],["28 days",40320]];
+const KIND={ban:"ban",tempban:"ban",softban:"ban",kick:"kick",timeout:"timeout",warn:"warn",unban:"unban"};
+const TITLE={kick:"Kick",ban:"Ban",tempban:"Temporary ban",softban:"Softban",warn:"Warn",timeout:"Timeout",unban:"Unban",note:"Add note"};
+function openMod(type,id,name){mod={type,id};const tp=((S.cfg.templates||{})[KIND[type]])||[];
+ $("mtl").textContent=TITLE[type];$("mwho").textContent=name;$("mr").value="";
+ $("mtp").innerHTML='<option value="">No template</option>'+tp.map((t,i)=>`<option value="${i}">${esc(t)}</option>`).join("");$("mtp").parentElement.classList.toggle("hidden",!tp.length);
+ $("mx").innerHTML=(type=="ban"?'<label class="mu">Delete their messages from the last</label><select id="mdays"><option value="0">Don\'t delete any</option><option value="1">1 day</option><option value="7">7 days</option></select>':"")+((type=="tempban"||type=="timeout")?'<label class="mu">Duration</label><select id="mdur">'+DUR.map(d=>`<option value="${d[1]}">${d[0]}</option>`).join("")+"</select>":"");
+ $("mmo").classList.remove("hidden")}
+async function doMember(m,a){const g=$("ms").value;
  if(a=="dm"){const d=await T(()=>api("/api/dm","POST",{userId:m.id}));if(d){await refresh();openThread({id:d.id,title:"Direct message / "+d.name});go("comms")}return}
- if(a=="kick"||a=="ban"){const r=prompt(a+" "+m.name+"\nReason (optional):","");if(r===null)return;body.reason=r}
- if(a=="timeout"){const r=prompt("Timeout minutes (max 40320):","10");if(r===null)return;body.minutes=r}
+ if(["kick","ban","tempban","softban","warn","timeout","note"].includes(a))return openMod(a,m.id,m.name);
+ const body={};
  if(a=="nickname"){const r=prompt("New nickname (leave blank to reset):","");if(r===null)return;body.nick=r}
  if(a=="addrole"||a=="removerole"){const n=prompt("Role name:\n"+S.roles.map(r=>r.name).join(", "));if(!n)return;const r=S.roles.find(x=>x.name.toLowerCase()==n.trim().toLowerCase());if(!r)return toast("No role with that name");body.roleId=r.id}
- if((a=="kick"||a=="ban")&&!confirm(a+" "+m.name+"?"))return;
+ if(a=="untimeout"&&!confirm("Remove the timeout from "+m.name+"?"))return;
  const r=await T(()=>api(`/api/guilds/${g}/members/${m.id}/${a}`,"POST",body),"Done");if(r)loadMem()}
 
-/* ---- commands ---- */
-async function loadCmds(){if(S.cmds)return cmdR();const r=await T(()=>api("/api/commands"));if(r){S.cmds=r;$("s3").textContent=r.length;cmdR()}}
-function cmdR(){const q=$("cq").value.toLowerCase();$("cg").innerHTML=(S.cmds||[]).filter(c=>c.name.includes(q)).map(c=>`<div class="cd"><code>/${esc(c.name)}</code><div>${esc(c.description)}</div><div class="mu">${c.options} option${c.options==1?"":"s"} · ${esc(c.perms)}</div></div>`).join("")||'<div class="mu">No slash commands are registered for this bot yet.</div>'}
+/* ---------- cases, commands, settings ---------- */
+async function loadCases(){const g=$("cs").value;if(!g){$("ctb").innerHTML='<tr><td class="mu">The bot is not in any server yet.</td></tr>';return}
+ const r=await T(()=>api(`/api/guilds/${g}/cases`));if(!r)return;S.cases=r;const ty=[...new Set(r.map(c=>c.type))],v=$("ct").value;$("ct").innerHTML='<option value="">All types</option>'+ty.map(t=>`<option>${t}</option>`).join("");$("ct").value=ty.includes(v)?v:"";caseR()}
+function caseR(){const q=$("cq2").value.toLowerCase(),t=$("ct").value;
+ $("ctb").innerHTML=S.cases.filter(c=>(!t||c.type==t)&&(c.user+c.mod+c.reason+c.userId).toLowerCase().includes(q)).map(c=>`<tr><td class="f mu" style="width:70px">#${c.n}</td><td><span class="tag" style="margin:0">${esc(c.type)}</span></td><td class="f">${esc(c.user)}<div class="mu" style="font-family:Inter;text-transform:none;letter-spacing:0;font-weight:400">${c.userId}</div></td><td class="mu">by ${esc(c.mod)}</td><td>${esc(c.reason)}</td><td class="mu">${new Date(c.time).toLocaleString()}</td></tr>`).join("")||'<tr><td class="mu">No cases yet. Moderation actions from chat and from this dashboard show up here.</td></tr>'}
+async function loadCmds(){const g=$("cgs").value;if(!g){$("cg").innerHTML='<div class="mu">The bot is not in any server yet.</div>';return}
+ const[c,cf]=await Promise.all([T(()=>api(`/api/guilds/${g}/commands`)),soft(api(`/api/guilds/${g}/config`),{})]);if(!c)return;S.cmds=c;S.cfg=cf;$("s3").textContent=c.length;
+ $("cpre").textContent="Members type these in chat with the prefix "+(cf.prefix||".")+". Change who can use each one, or turn it off for this server.";cmdR()}
+const LVN=["Everyone","Mod","Admin","Owner"];
+function cmdR(){const q=$("cq").value.toLowerCase(),cats=[...new Set(S.cmds.map(c=>c.cat))];
+ $("cf").innerHTML=["All",...cats].map(c=>`<button class="chip f ${(S.cat||"All")==c?"on":""}" data-c="${c}">${c}</button>`).join("");
+ $("cg").innerHTML=S.cmds.filter(c=>c.name.includes(q)&&(!S.cat||c.cat==S.cat)).map(c=>`<div class="cd"><div class="row" style="justify-content:space-between"><code>${esc(S.cfg.prefix||".")}${esc(c.name)}</code>${c.botOwner?'<span class="mu f">bot owner</span>':`<div class="tg2 ${c.enabled?"on":""}" data-t="${esc(c.name)}"></div>`}</div><div class="mu">${c.cat} · ${esc(c.usage)||"no arguments"}</div>${c.botOwner?"":`<select data-p="${esc(c.name)}">${LVN.map((l,i)=>`<option value="${i}" ${c.level==i?"selected":""}>${l}${i==c.defaultLevel?" (default)":""}</option>`).join("")}</select>`}</div>`).join("")||'<div class="mu">No commands match.</div>'}
+const FIELDS=[["prefix","Prefix","text"],["logChannel","Log channel (cases and reports)","ch"],["welcomeChannel","Welcome and leave channel","ch"],["suggestChannel","Suggestions channel","ch"],["welcomeMsg","Welcome message ({user} {server} {count})","area"],["leaveMsg","Leave message ({user} {server})","area"],["autorole","Role given to new members","role"],["modRole","Mod role","role"],["adminRole","Admin role","role"],["verifyRole","Role given by .verify","role"],["supportRole","Ticket support role","role"],["joingate","Minimum account age to join, in days (0 = off)","num"],["badwords","Blacklisted words (one per line)","list"],["linkAllow","Allowed link domains (one per line)","list"],["antilink","Block links","bool"],["antispam","Block spam","bool"],["automod","Block blacklisted words","bool"],["raidmode","Raid mode (kick every new member)","bool"],["dmOnAction","DM people when they are moderated","bool"],["xp","Message XP and levels","bool"]];
+const TPL=["ban","unban","kick","timeout","warn"];
+async function loadSet(){const g=$("sgs").value;if(!g){$("sform").innerHTML='<div class="mu">The bot is not in any server yet.</div>';return}
+ const[cf,ro]=await Promise.all([T(()=>api(`/api/guilds/${g}/config`)),soft(api(`/api/guilds/${g}/roles`))]);if(!cf)return;S.cfg=cf;S.roles=ro;
+ const gd=S.guilds.find(x=>x.id==g),co=o=>'<option value="">Not set</option>'+gd.channels.map(c=>`<option value="${c.id}" ${o==c.id?"selected":""}># ${esc(c.name)}</option>`).join(""),rl=o=>'<option value="">Not set</option>'+ro.map(r=>`<option value="${r.id}" ${o==r.id?"selected":""}>${esc(r.name)}</option>`).join("");
+ $("sform").innerHTML=FIELDS.map(([k,l,t])=>{const v=cf[k],id="f_"+k;
+  if(t=="bool")return `<div class="ck"><input type="checkbox" id="${id}" ${v?"checked":""}><label for="${id}" style="margin:0">${l}</label></div>`;
+  const inp=t=="text"?`<input id="${id}" value="${esc(v)}">`:t=="num"?`<input id="${id}" type="number" min="0" value="${esc(v||0)}">`:t=="ch"?`<select id="${id}">${co(v)}</select>`:t=="role"?`<select id="${id}">${rl(v)}</select>`:t=="list"?`<textarea id="${id}" rows="4">${esc((v||[]).join("\n"))}</textarea>`:`<textarea id="${id}" rows="3">${esc(v)}</textarea>`;
+  return `<div><label class="mu">${l}</label>${inp}</div>`}).join("");
+ $("tform").innerHTML=TPL.map(k=>`<div><label class="mu">${k}</label><textarea id="t_${k}" rows="5">${esc(((cf.templates||{})[k]||[]).join("\n"))}</textarea></div>`).join("")}
+async function saveSet(){const g=$("sgs").value;if(!g)return;const b={},lines=s=>s.split("\n").map(x=>x.trim()).filter(Boolean);
+ FIELDS.forEach(([k,l,t])=>{const e=$("f_"+k);b[k]=t=="bool"?e.checked:t=="num"?Math.max(0,+e.value||0):t=="list"?lines(e.value).map(x=>x.toLowerCase()):(t=="ch"||t=="role")?(e.value||null):e.value});
+ b.templates={};TPL.forEach(k=>{b.templates[k]=lines($("t_"+k).value)});
+ const r=await T(()=>api(`/api/guilds/${g}/config`,"POST",b),"Settings saved");if(r)loadSet()}
 
 function bind(){
  $("stb").onclick=e=>{const b=e.target.closest("button");if(b)setPres(b.dataset.s,S.me.activity?S.me.activity.type:"Playing",S.me.activity?S.me.activity.text:"")};
@@ -239,27 +333,44 @@ function bind(){
  $("aclr").onclick=()=>{$("ax").value="";setPres(S.me.status,"Playing","")};
  $("tb").onclick=async e=>{const id=e.target.dataset.l;if(!id)return;const g=S.guilds.find(x=>x.id==id);if(!confirm("Make the bot leave "+g.name+"?"))return;await T(()=>api(`/api/guilds/${id}/leave`,"POST"),"Left "+g.name);refresh()};
  $("sinv").onclick=()=>window.open(S.me.invite,"_blank","noopener");
- $("side").onclick=async e=>{const k=e.target.dataset.k;if(!k)return;const p=k.split(",");
+ $("side").onclick=async e=>{const k=(e.target.closest("button")||{dataset:{}}).dataset.k;if(!k)return;const p=k.split(",");
   if(k=="new"){const id=(prompt("User ID to message:")||"").trim();if(!id)return;const d=await T(()=>api("/api/dm","POST",{userId:id}));if(d){await refresh();openThread({id:d.id,title:"Direct message / "+d.name})}return}
   if(p[0]=="c"){const g=S.guilds.find(x=>x.id==p[1]);openThread({id:p[2],title:g.name+" / #"+g.channels.find(c=>c.id==p[2]).name})}
   else{const d=S.dms.find(x=>x.id==p[1]);openThread({id:d.id,title:"Direct message / "+d.name})}};
- $("send").onclick=sendMsg;$("mi").onkeydown=e=>{if(e.key==="Enter")sendMsg()};
+ $("send").onclick=sendMsg;
+ $("mi").onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg()}};
+ $("mi").oninput=()=>{$("mi").style.height="auto";$("mi").style.height=Math.min(140,$("mi").scrollHeight)+"px"};
+ $("att").onclick=()=>$("fi").click();
+ $("fi").onchange=e=>{for(const f of e.target.files){if(S.files.length>=5){toast("Max 5 files");break}if(S.files.reduce((a,x)=>a+x.size,0)+f.size>8e6){toast("Files must total under 8 MB");break}S.files.push(f)}e.target.value="";chips()};
+ $("fchips").onclick=e=>{const i=e.target.dataset.x;if(i!=null){e.preventDefault();S.files.splice(i,1);chips()}};
  $("rbar").onclick=e=>{if(e.target.id=="rcl"){e.preventDefault();S.reply=null;rb()}};
- $("msgs").onclick=async e=>{const el=e.target.closest(".msg");if(!el||!S.cur)return;const m=S.msgs.find(x=>x.id==el.dataset.i),a=e.target.dataset.a,r=e.target.dataset.r,base=`/api/channels/${S.cur.id}/messages/${m.id}`;
-  if(r){await T(()=>api(base+"/react","POST",{emoji:r}));return loadMsgs(true)}
+ $("jump").onclick=()=>{const el=$("msgs");el.scrollTop=el.scrollHeight;S.stick=true;S.newc=0;updJump()};
+ $("msgs").onscroll=()=>{const el=$("msgs");S.stick=el.scrollHeight-el.scrollTop-el.clientHeight<90;if(S.stick)S.newc=0;if(el.scrollTop<80)loadOlder();updJump()};
+ $("msgs").addEventListener("load",()=>{const el=$("msgs");if(S.stick)el.scrollTop=el.scrollHeight},true);
+ $("msgs").onclick=async e=>{const el=e.target.closest(".msg");if(!el||!S.cur)return;const m=S.msgs.find(x=>x.id==el.dataset.i);if(!m)return;const a=e.target.dataset.a,rx=e.target.closest(".rx"),base=`/api/channels/${S.cur.id}/messages/${m.id}`;
+  if(rx){await T(()=>api(base+"/react","POST",{emoji:rx.dataset.r}));return}
   if(a=="re"){S.reply=m;rb();$("mi").focus()}
-  if(a=="rx"){const em=prompt("Emoji to react with:","👍");if(em){await T(()=>api(base+"/react","POST",{emoji:em}));loadMsgs(true)}}
-  if(a=="ed"){const t=prompt("Edit message:",m.content);if(t&&t.trim()){await T(()=>api(base,"PATCH",{content:t}),"Edited");loadMsgs(true)}}
-  if(a=="pin"){await T(()=>api(base+"/pin","POST"),m.pinned?"Unpinned":"Pinned");loadMsgs(true)}
-  if(a=="del"&&confirm("Delete this message?")){await T(()=>api(base,"DELETE"),"Deleted");loadMsgs(true)}
+  if(a=="rx"){const em=prompt("Emoji to react with:","👍");if(em)await T(()=>api(base+"/react","POST",{emoji:em}))}
+  if(a=="ed"){const t=prompt("Edit message:",m.content);if(t&&t.trim())await T(()=>api(base,"PATCH",{content:t}),"Edited")}
+  if(a=="pin")await T(()=>api(base+"/pin","POST"),m.pinned?"Unpinned":"Pinned");
+  if(a=="del"&&confirm("Delete this message?"))await T(()=>api(base,"DELETE"),"Deleted");
   if(a=="cp"){try{navigator.clipboard.writeText(m.content)}catch(x){}toast("Copied")}
   if(a=="fw"){fw=m;$("fp").textContent=m.author+": "+m.content;$("fs").innerHTML=fwOpts();$("fmo").classList.remove("hidden")}};
  $("fx").onclick=()=>$("fmo").classList.add("hidden");
  $("fg").onclick=async()=>{const id=$("fs").value;if(!id)return;await T(()=>api(`/api/channels/${id}/messages`,"POST",{content:"↪ Forwarded from "+fw.author+": "+fw.content}),"Forwarded");$("fmo").classList.add("hidden")};
  $("ms").onchange=loadMem;$("mq").oninput=memR;$("mre").onclick=loadMem;
  $("mt").onclick=e=>{const b=e.target.closest("[data-m]");if(b)doMember(S.members[b.dataset.m],b.previousElementSibling.value)};
- $("bt").onclick=async e=>{const id=e.target.dataset.u;if(!id)return;const r=await T(()=>api(`/api/guilds/${$("ms").value}/bans/${id}`,"DELETE"),"Unbanned");if(r)loadMem()};
- $("cq").oninput=cmdR;
+ $("bt").onclick=e=>{const id=e.target.dataset.u;if(id)openMod("unban",id,e.target.dataset.n)};
+ $("mtp").onchange=()=>{const tp=((S.cfg.templates||{})[KIND[mod.type]])||[],v=$("mtp").value;if(v!=="")$("mr").value=tp[+v]};
+ $("mno").onclick=()=>$("mmo").classList.add("hidden");
+ $("mok").onclick=async()=>{const b={reason:$("mr").value.trim()||undefined};if($("mdays"))b.days=+$("mdays").value;if($("mdur"))b.minutes=+$("mdur").value;
+  const r=await T(()=>api(`/api/guilds/${$("ms").value}/members/${mod.id}/${mod.type}`,"POST",b));if(r){toast(TITLE[mod.type]+" done"+(r.n?" (case #"+r.n+")":""));$("mmo").classList.add("hidden");loadMem()}};
+ $("cs").onchange=loadCases;$("ct").onchange=caseR;$("cq2").oninput=caseR;
+ $("cgs").onchange=loadCmds;$("cq").oninput=cmdR;
+ $("cf").onclick=e=>{const c=e.target.dataset.c;if(c){S.cat=c=="All"?"":c;cmdR()}};
+ $("cg").onclick=async e=>{const n=e.target.dataset.t;if(!n)return;const c=S.cmds.find(x=>x.name==n),v=!c.enabled;const r=await T(()=>api(`/api/guilds/${$("cgs").value}/commands/${encodeURIComponent(n)}`,"POST",{enabled:v}));if(r){c.enabled=v;cmdR()}};
+ $("cg").onchange=async e=>{const n=e.target.dataset.p;if(!n)return;const c=S.cmds.find(x=>x.name==n);const r=await T(()=>api(`/api/guilds/${$("cgs").value}/commands/${encodeURIComponent(n)}`,"POST",{level:+e.target.value}),"Saved");if(r)c.level=+e.target.value};
+ $("sgs").onchange=loadSet;$("ssave").onclick=saveSet;
  $("cpn").onclick=async e=>{const b=e.target.dataset.b;if(!b)return;const c=$("tc").value,v=$("tv").value.trim();if(!c)return toast("Pick a channel first");
   if(b=="create"){if(!v)return toast("Enter a channel name");const g=S.guilds.find(x=>x.channels.some(y=>y.id==c));await T(()=>api(`/api/guilds/${g.id}/channels`,"POST",{name:v}),"Channel created");return refresh()}
   const P={purge:["/purge","POST",{count:+v||10}],slowmode:["/slowmode","POST",{seconds:+v||0}],lock:["/lock","POST",{lock:true}],unlock:["/lock","POST",{lock:false}],rename:["","PATCH",{name:v}],topic:["","PATCH",{topic:v}],delete:["","DELETE"]}[b];
