@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cobra Bot Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0e1729;--ink:#080e1c;--n2:#16223d;--char:#171717;--st:#8d9ab3;--ln:rgba(255,255,255,.16);--lt:#f3f4f7;--red:#e5484d;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--navy);color:#fff;font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3,button,label,.f{font-family:'Chakra Petch','Arial Narrow',Impact,sans-serif;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+button{cursor:pointer;border:0;background:none;color:inherit}
+.hidden{display:none!important}
+.nb{position:relative;border:2px solid currentColor;padding:14px 38px;font-size:14px;--gb:var(--navy);margin:8px}
+.nb::before,.nb::after{content:"";position:absolute;height:5px;width:34px;background:var(--gb)}
+.nb::before{top:-3px;left:62%}.nb::after{bottom:-3px;left:20%}
+.nb:hover{background:#fff;color:var(--navy)}
+.nb.s{padding:8px 18px;font-size:12px;margin:0}.nb.d{color:#ff8a8e}
+.lt .nb:hover{background:var(--navy);color:#fff}
+.wm{position:absolute;left:50%;top:50%;width:min(720px,90vw);height:430px;transform:translate(-50%,-50%);fill:#fff;opacity:.06;pointer-events:none}
+input,select,textarea{background:transparent;border:0;border-bottom:2px solid var(--ln);color:#fff;padding:12px 2px;width:100%;font:inherit;border-radius:0}
+select option{background:var(--navy)}
+input:focus,select:focus,textarea:focus{outline:0;border-color:#fff}
+textarea{border:2px solid var(--ln);padding:10px}
+/* login */
+#login{min-height:100vh;position:relative;overflow:hidden;display:grid;place-items:center;padding:24px;background:var(--navy)}
+.gr{position:absolute;inset:0;background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:64px 64px;opacity:.3;-webkit-mask-image:radial-gradient(circle,#000,transparent 70%);mask-image:radial-gradient(circle,#000,transparent 70%)}
+.ring{position:absolute;left:50%;top:50%;border:1px solid var(--ln);border-radius:50%;transform:translate(-50%,-50%)}
+.sw{position:absolute;left:50%;top:50%;width:1000px;height:1000px;margin:-500px;border-radius:50%;background:conic-gradient(rgba(255,255,255,.12),transparent 22%);animation:sp 9s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.gr,.ring,.sw,.wm{pointer-events:none}
+input{-webkit-user-select:text;user-select:text;-webkit-appearance:none;appearance:none}
+#p{-webkit-text-security:disc}
+.lc{position:relative;z-index:5;width:100%;max-width:440px;text-align:center;animation:up .9s both}
+@keyframes up{from{opacity:0;transform:translateY(30px)}}
+.tg{letter-spacing:.5em;font-size:12px;color:var(--st);font-weight:600}
+.lc h1{font-size:clamp(34px,8vw,54px);line-height:1.05;margin:14px 0 34px}
+.fl{text-align:left;margin-bottom:22px}.fl label{font-size:11px;color:var(--st)}
+.err{color:#ff8a8e;font-size:13px;min-height:22px}
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;align-items:center;gap:20px;padding:0 28px;height:68px;background:rgba(8,14,28,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
+.br{display:flex;align-items:center;gap:10px;font-size:15px;white-space:nowrap}
+.br svg{width:38px;height:24px;fill:#fff}
+nav{display:flex;flex:1;overflow-x:auto;height:100%}
+nav button{padding:0 16px;font-size:13px;color:var(--st);border-bottom:3px solid transparent;margin-top:3px}
+nav button.on,nav button:hover{color:#fff;border-color:#fff}
+.pill{font-size:11px;border:1px solid var(--ln);padding:5px 12px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:#3ba55d;flex:none}
+.idle{background:#e8a93a}.dnd{background:var(--red)}.offline{background:#747f8d}
+/* sections */
+.tab{display:none}.tab.on{display:block}
+.hero{position:relative;min-height:78vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px;overflow:hidden;background:linear-gradient(180deg,var(--ink),var(--navy))}
+.hero h1{font-size:clamp(44px,10vw,124px);line-height:1;letter-spacing:.05em;margin:16px 0 26px;position:relative}
+.hud{background:rgba(255,255,255,.08);border-left:6px solid #fff;padding:16px 28px;margin-bottom:30px;text-align:left;position:relative;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.hud small{display:block;font:400 15px Inter,sans-serif;letter-spacing:.06em;color:#cdd5e6;text-transform:none}
+.sec{padding:84px 28px}.in{max-width:1180px;margin:auto}
+.lt{background:var(--lt);color:var(--navy)}.lt .nb{--gb:var(--lt)}
+.ch{background:var(--char)}
+.sh{font-size:clamp(24px,4vw,40px);text-align:center;margin-bottom:40px}
+.st4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border:1px solid var(--ln)}
+.st4>div{padding:30px;border-right:1px solid var(--ln);border-bottom:1px solid var(--ln)}
+.st4 b{display:block;font:700 44px 'Chakra Petch',sans-serif}.st4 span{font-size:12px;color:var(--st)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.sb{flex:1;min-width:140px;border:1px solid var(--ln);padding:18px;font-size:13px;display:flex;gap:10px;align-items:center;justify-content:center}
+.sb:hover{border-color:#fff}.sb.on{background:#fff;color:var(--navy)}
+.sl{aspect-ratio:16/8;min-height:260px;position:relative;overflow:hidden;color:#fff;display:flex;align-items:flex-end;padding:28px}
+.sl i{position:absolute;right:5%;top:50%;transform:translateY(-50%);font:700 clamp(120px,26vw,300px)/1 'Chakra Petch',sans-serif;opacity:.12;font-style:normal}
+.sl h3{font-size:clamp(20px,3vw,32px);position:relative}.sl span{position:relative;display:block;font-size:14px;letter-spacing:.08em;color:#cdd5e6}
+.cnt{display:flex;justify-content:center;align-items:center;gap:26px;margin:26px 0;font-size:20px}
+.cnt button{font-size:34px;line-height:1;padding:0 8px}
+.tb{width:100%;border-collapse:collapse}
+.tb td{padding:22px 10px;border-bottom:1px solid var(--ln)}.tb .f{font-size:16px}.mu{color:var(--st);font-size:14px}
+
+/* chat */
+.chat{display:grid;grid-template-columns:260px 1fr;border:1px solid var(--ln);height:calc(100vh - 250px);min-height:480px;background:var(--ink)}
+.side{overflow-y:auto;border-right:1px solid var(--ln);padding:10px}
+.side h3{font-size:11px;color:var(--st);margin:16px 8px 6px}
+.side button{display:block;width:100%;text-align:left;padding:8px 10px;color:var(--st);font:500 14px Inter,sans-serif;letter-spacing:.02em;text-transform:none}
+.side button:hover,.side button.on{background:rgba(255,255,255,.1);color:#fff}
+.cm{display:flex;flex-direction:column;min-width:0}
+.chh{padding:14px 18px;border-bottom:1px solid var(--ln);font-size:13px}
+.msgs{flex:1;overflow-y:auto;padding:10px 6px}
+.msg{display:flex;gap:12px;padding:8px 12px;position:relative}.msg:hover{background:rgba(255,255,255,.05)}
+.av{width:38px;height:38px;background:var(--n2) center/cover;border:1px solid var(--ln);display:grid;place-items:center;font:700 15px 'Chakra Petch',sans-serif;flex:none}
+.msg .b{flex:1;min-width:0;word-break:break-word}.msg .n{font-weight:600}.msg small{color:var(--st);margin-left:8px;font-size:11px}
+.rp{font-size:12px;color:var(--st);border-left:3px solid #fff;padding-left:8px}
+.act{position:absolute;right:12px;top:-14px;display:none;background:var(--n2);border:1px solid var(--ln)}
+.msg:hover .act{display:flex}.act button{padding:5px 9px;font-size:10px;letter-spacing:.06em}.act button:hover{background:#fff;color:var(--navy)}
+.rx{display:inline-block;border:1px solid var(--ln);padding:0 8px;margin:4px 4px 0 0;font-size:13px;cursor:pointer}
+.tag{font-size:10px;border:1px solid var(--st);padding:0 6px;margin-left:6px;color:var(--st)}
+.comp{padding:12px 16px;border-top:1px solid var(--ln)}#rbar{font-size:12px;color:var(--st)}
+/* cmds */
+.cg{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));margin-top:26px}
+.cd{border:1px solid var(--ln);padding:22px;background:var(--n2);display:grid;gap:10px}
+.cd code{font:700 20px 'Chakra Petch',sans-serif;letter-spacing:.06em}
+.tg2{width:44px;height:22px;background:#3a4664;border-radius:11px;position:relative;flex:none}
+.tg2.on{background:#3ba55d}.tg2::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}.tg2.on::after{left:24px}
+.fm{max-width:600px;margin:auto;display:grid;gap:22px}
+/* footer, modal */
+footer{background:var(--char);padding:64px 28px 40px;border-top:2px solid var(--st)}
+.fc{max-width:1180px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px}
+footer button{display:block;text-align:left;padding:10px 0;font-size:13px}footer p{color:var(--st);font-size:13px;margin-top:20px}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.7);display:grid;place-items:center;z-index:20;padding:20px}
+.mo>div{background:var(--navy);border:1px solid var(--ln);padding:30px;width:100%;max-width:420px;display:grid;gap:18px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#fff;color:var(--navy);padding:12px 24px;font:700 12px 'Chakra Petch',sans-serif;letter-spacing:.14em;text-transform:uppercase;z-index:30;opacity:0;transition:.25s;pointer-events:none}
+#toast.on{opacity:1}
+@media(max-width:800px){.chat{grid-template-columns:1fr;grid-template-rows:150px 1fr}.side{border-right:0;border-bottom:1px solid var(--ln)}header{padding:0 12px;gap:10px}.pill{display:none}.sec{padding:56px 16px}.sl{aspect-ratio:auto}}
+.chip{border:1px solid var(--ln);padding:5px 12px;font-size:11px;margin:0}.chip:hover,.chip.on{background:#fff;color:var(--navy)}.cd h3{font-size:15px}.cd .row{gap:8px}.cd select,.cd input{font-size:14px}.tb select{padding:6px 2px;font-size:13px}
+#login .lc{text-align:left;padding:36px;border:1px solid var(--ln);background:var(--ink);animation:none}#login h1{margin:0 0 28px;font-size:34px}
+</style>
+</head><body>
+<section id="login"><div class="lc"><h1>Sign in</h1>
+<div class="fl"><label>Backend URL</label><input id="ub" placeholder="https://cobra.onrender.com" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
+<div class="fl"><label>Username</label><input id="u" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
+<div class="fl"><label>Password</label><input id="p" type="password" autocomplete="current-password"></div>
+<div class="err" id="err"></div><button class="nb" id="go">Sign in</button></div></section>
+
+<div id="app" class="hidden">
+<header><div class="br f"><span id="bn"></span></div><nav id="nav"></nav><span class="pill f" id="hp"></span><button class="nb s" id="out">Log out</button></header>
+
+<div class="tab on" id="t-home">
+ <div class="sec" style="padding-bottom:0"><div class="in"><div class="row" style="gap:22px"><div class="av" id="hav" style="width:84px;height:84px"></div><div style="flex:1;min-width:220px"><div class="mu f" id="tg"></div><h1 id="hn" style="font-size:clamp(30px,6vw,50px);line-height:1.1"></h1><div class="mu" id="hud"></div></div><button class="nb" data-go="comms">Open messages</button></div></div></div>
+ <div class="sec"><div class="in"><h2 class="sh">Overview</h2><div class="st4"><div><b id="s1">–</b><span class="f">Servers</span></div><div><b id="s2">–</b><span class="f">Total members</span></div><div><b id="s3">–</b><span class="f">Slash commands</span></div><div><b id="s5">–</b><span class="f">Open DMs</span></div></div></div></div>
+ <div class="sec ch"><div class="in"><h2 class="sh">Presence</h2>
+  <div class="row" id="stb" style="margin-bottom:26px"><button class="sb f" data-s="online"><i class="dot online"></i>Online</button><button class="sb f" data-s="idle"><i class="dot idle"></i>Idle</button><button class="sb f" data-s="dnd"><i class="dot dnd"></i>Do not disturb</button><button class="sb f" data-s="invisible"><i class="dot offline"></i>Offline</button></div>
+  <div class="row"><select id="at" style="width:190px"><option>Playing</option><option>Listening</option><option>Watching</option><option>Competing</option></select><input id="ax" style="flex:1;min-width:220px" placeholder="Activity text"><button class="nb s" id="aset">Apply</button><button class="nb s d" id="aclr">Clear</button></div></div></div>
+</div>
+
+<div class="tab" id="t-srv"><div class="sec"><div class="in"><h2 class="sh">Servers</h2><table class="tb" id="tb"></table><div style="text-align:center;margin-top:24px"><button class="nb" id="sinv">Add bot to a server</button></div></div></div></div>
+
+<div class="tab" id="t-comms"><div class="sec"><div class="in"><h2 class="sh">Messages</h2>
+ <div class="chat"><div class="side" id="side"></div><div class="cm"><div class="chh f" id="chh">No channel selected</div><div class="msgs" id="msgs"></div>
+ <div class="comp"><div id="rbar"></div><div class="row"><input id="mi" style="flex:1" placeholder="Message as the bot"><button class="nb s" id="send">Send</button></div></div></div></div></div></div></div>
+
+<div class="tab" id="t-mem"><div class="sec"><div class="in"><h2 class="sh">Members</h2>
+ <div class="row" style="margin-bottom:14px"><select id="ms" style="width:240px"></select><input id="mq" placeholder="Search members" style="flex:1;min-width:200px"><button class="nb s" id="mre">Reload</button></div>
+ <table class="tb" id="mt"></table><h2 class="sh" style="margin-top:56px">Ban list</h2><table class="tb" id="bt"></table></div></div></div>
+
+<div class="tab" id="t-cmds"><div class="sec"><div class="in"><h2 class="sh">Slash commands</h2><p class="mu" style="text-align:center;margin:-20px 0 26px">These are the commands registered with Discord for your bot. They are built in the bot code.</p><input id="cq" placeholder="Search commands"><div class="cg" id="cg"></div></div></div></div>
+
+<div class="tab" id="t-tools"><div class="sec"><div class="in"><h2 class="sh">Channel tools</h2><div class="cg" style="margin-top:0">
+ <div class="cd" id="cpn"><h3 class="f">Manage a channel</h3><select id="tc"></select><input id="tv" placeholder="Value (amount, seconds, or name)"><div class="row"><button class="nb s" data-b="purge">Purge</button><button class="nb s" data-b="slowmode">Slowmode</button><button class="nb s" data-b="lock">Lock</button><button class="nb s" data-b="unlock">Unlock</button><button class="nb s" data-b="rename">Rename</button><button class="nb s" data-b="topic">Set topic</button><button class="nb s" data-b="create">Create channel</button><button class="nb s d" data-b="delete">Delete</button></div></div>
+ <div class="cd" id="apn"><h3 class="f">Send an announcement</h3><select id="ac"></select><input id="atl" placeholder="Title"><textarea id="ads" rows="3" placeholder="Message" style="width:100%"></textarea><input id="acl" placeholder="Color (hex, e.g. #2b3a67)"><div class="row"><button class="nb s" data-b="embed">Send as embed</button><button class="nb s" data-b="plain">Send as plain text</button></div></div>
+</div></div></div></div>
+
+<div class="tab" id="t-id"><div class="sec"><div class="in"><h2 class="sh">Bot identity</h2><div class="fm">
+ <div class="row" style="gap:24px"><div class="av" id="pav" style="width:110px;height:110px"></div><div><input type="file" id="pf" accept="image/*" class="hidden"><button class="nb s" onclick="pf.click()">Change avatar</button></div></div>
+ <div><label class="mu">Username</label><input id="pn"></div><div><label class="mu">Bio (application description)</label><textarea id="pb" rows="4" maxlength="400"></textarea></div>
+ <div><button class="nb" id="psave">Save</button></div><p class="mu">Discord limits how often a bot can change its username and avatar.</p></div></div></div></div>
+</div>
+
+<div class="mo hidden" id="fmo"><div><h3>Forward message</h3><div class="mu" id="fp"></div><select id="fs"></select><div class="row"><button class="nb s" id="fg">Forward</button><button class="nb s d" id="fx">Cancel</button></div></div></div>
+<div id="toast"></div>
+<script>
+const DEFAULT_API=""; // optional: put your Render URL here so the login box is pre-filled
+const $=i=>document.getElementById(i),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const toast=t=>{const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove("on"),2400)};
+const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}};
+let API=ls("cobra-api")||DEFAULT_API,TOK="";try{TOK=sessionStorage.getItem("cobra-tok")||""}catch(e){}
+const S={me:null,guilds:[],dms:[],cur:null,reply:null,msgs:[],members:[],roles:[],bans:[],cmds:null,tab:"home",fresh:false,filled:false,av:null};
+let last="",fw=null;
+async function api(p,m,b){const r=await fetch(API+p,{method:m||"GET",headers:Object.assign({"Content-Type":"application/json"},TOK?{Authorization:"Bearer "+TOK}:{}),body:b?JSON.stringify(b):undefined});
+ if(r.status===401){try{sessionStorage.removeItem("cobra-tok")}catch(e){}toast("Session expired. Sign in again.");setTimeout(()=>location.reload(),1200);throw new Error("Session expired")}
+ const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Request failed ("+r.status+")");return j}
+const T=async(f,ok)=>{try{const r=await f();if(ok)toast(ok);return r}catch(e){toast(e.message||"Something went wrong")}};
+const err=t=>{$("err").textContent=t};
+$("ub").value=API;
+async function doLogin(){const b=$("ub").value.trim().replace(/\/+$/,"");if(!/^https?:\/\//.test(b))return err("Enter the full backend URL, starting with https://");
+ err("");$("go").textContent="Connecting…";API=b;ls("cobra-api",b);
+ try{const r=await fetch(API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({u:$("u").value.trim(),p:$("p").value})});const j=await r.json().catch(()=>({}));
+  if(!r.ok){err(j.error||"Login failed");$("go").textContent="Sign in";return}
+  TOK=j.token;try{sessionStorage.setItem("cobra-tok",TOK)}catch(e){}enter()}
+ catch(e){err("Can't reach the backend. Check the URL. If the service was asleep, wait a minute and try again.");$("go").textContent="Sign in"}}
+$("go").onclick=doLogin;$("p").onkeydown=e=>{if(e.key==="Enter")doLogin()};
+$("out").onclick=()=>{try{sessionStorage.removeItem("cobra-tok")}catch(e){}location.reload()};
+
+const NAV=[["home","Overview"],["srv","Servers"],["comms","Messages"],["mem","Members"],["cmds","Commands"],["tools","Tools"],["id","Identity"]];
+function go(t){S.tab=t;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x.id=="t-"+t));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go==t));scrollTo(0,0);if(t=="comms")loadMsgs(true);if(t=="mem")loadMem();if(t=="cmds")loadCmds()}
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)go(g.dataset.go)});
+
+async function enter(){$("login").classList.add("hidden");$("app").classList.remove("hidden");
+ $("nav").innerHTML=NAV.map((t,i)=>`<button data-go="${t[0]}" class="${i?"":"on"}">${t[1]}</button>`).join("");
+ bind();try{await refresh()}catch(e){toast(e.message)}
+ api("/api/commands").then(r=>{S.cmds=r;$("s3").textContent=r.length}).catch(()=>{});
+ setInterval(()=>{if(S.tab=="comms")loadMsgs()},4000);setInterval(()=>refresh().catch(()=>{}),45000)}
+async function refresh(){const[me,g,d]=await Promise.all([api("/api/me"),api("/api/guilds"),api("/api/dms")]);S.me=me;S.guilds=g;S.dms=d;paint();srvT();side();fillSel()}
+const chanOpts=()=>S.guilds.map(g=>g.channels.map(c=>`<option value="${c.id}">${esc(g.name)} #${esc(c.name)}</option>`).join("")).join("");
+function fillSel(){const v=[$("ms").value,$("tc").value,$("ac").value];$("ms").innerHTML=S.guilds.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("");$("tc").innerHTML=$("ac").innerHTML=chanOpts();
+ if(v[0])$("ms").value=v[0];if(v[1])$("tc").value=v[1];if(v[2])$("ac").value=v[2]}
+function paint(){const m=S.me;if(!m)return;const st={online:"Online",idle:"Idle",dnd:"Do not disturb",invisible:"Offline",offline:"Offline"}[m.status]||m.status,sk=m.status=="invisible"?"offline":m.status;
+ $("bn").textContent=$("hn").textContent=m.name;$("tg").textContent="Status: "+st;$("hp").innerHTML=`<i class="dot ${sk}"></i>${st}`;
+ $("hud").textContent=(m.activity&&m.activity.text?m.activity.type+" "+m.activity.text:"No activity set")+(m.bio?" · "+m.bio:"");
+ ["hav","pav"].forEach(k=>{$(k).style.backgroundImage=`url(${S.av||m.avatar})`});
+ $("s1").textContent=S.guilds.length;$("s2").textContent=S.guilds.reduce((a,g)=>a+g.members,0).toLocaleString();$("s5").textContent=S.dms.length;
+ document.querySelectorAll(".sb").forEach(b=>b.classList.toggle("on",b.dataset.s==(m.status=="offline"?"invisible":m.status)));
+ if(!S.filled){$("pn").value=m.name;$("pb").value=m.bio||"";S.filled=true}}
+async function setPres(status,type,text){status=status=="offline"?"invisible":status;const r=await T(()=>api("/api/presence","POST",{status,type,text}),"Presence updated");if(r){S.me.status=status;S.me.activity=text?{type,text}:null;paint()}}
+function srvT(){$("tb").innerHTML=S.guilds.map((g,i)=>`<tr><td class="f mu" style="width:60px">${String(i+1).padStart(2,"0")}</td><td class="f">${esc(g.name)}</td><td class="mu">${g.members.toLocaleString()} members</td><td class="mu">${g.channels.length} text channels</td><td><div class="row" style="justify-content:flex-end"><button class="nb s d" data-l="${g.id}">Leave</button></div></td></tr>`).join("")||'<tr><td class="mu">The bot is not in any server yet. Use "Add bot to a server".</td></tr>'}
+
+/* ---- messages ---- */
+function side(){let h="";S.guilds.forEach(g=>{h+=`<h3>${esc(g.name)}</h3>`+g.channels.map(c=>`<button data-k="c,${g.id},${c.id}" class="${S.cur&&S.cur.id==c.id?"on":""}"># ${esc(c.name)}</button>`).join("")});
+ h+="<h3>Direct messages</h3>"+S.dms.map(d=>`<button data-k="d,${d.id}" class="${S.cur&&S.cur.id==d.id?"on":""}">@ ${esc(d.name)}</button>`).join("")+'<button data-k="new">+ Message a user by ID</button>';$("side").innerHTML=h}
+function openThread(t){S.cur=t;S.reply=null;S.fresh=true;last="";$("chh").textContent=t.title;rb();side();loadMsgs(true)}
+async function loadMsgs(force){if(!S.cur)return;const id=S.cur.id;try{const ms=await api(`/api/channels/${id}/messages`);if(!S.cur||S.cur.id!=id)return;const j=JSON.stringify(ms);if(j==last&&!force)return;last=j;S.msgs=ms;msgR()}catch(e){if(force)toast(e.message)}}
+function msgR(){const el=$("msgs"),near=el.scrollHeight-el.scrollTop-el.clientHeight<140;
+ el.innerHTML=S.msgs.map(m=>{const rp=m.reply?S.msgs.find(x=>x.id==m.reply):null;
+  return `<div class="msg" data-i="${m.id}"><div class="av">${esc((m.author||"?")[0].toUpperCase())}</div><div class="b">${rp?`<div class="rp">↩ ${esc(rp.author)}: ${esc(rp.content.slice(0,60))}</div>`:m.reply?'<div class="rp">↩ reply</div>':""}<div class="n">${esc(m.author)}${m.bot?'<span class="tag">BOT</span>':""}<small>${new Date(m.time).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}${m.edited?" (edited)":""}${m.pinned?" · pinned":""}</small></div><div>${esc(m.content).replace(/\n/g,"<br>")}</div>${m.attachments.map(a=>`<div><a href="${esc(a.url)}" target="_blank" rel="noopener" style="color:var(--st)">${esc(a.name)}</a></div>`).join("")}${m.embeds.map(e=>`<div class="mu">[embed] ${esc(e)}</div>`).join("")}${m.reactions.map(r=>`<span class="rx" data-r="${esc(r.emoji)}">${esc(r.emoji)} ${r.count}</span>`).join("")}</div>
+  <div class="act f"><button data-a="re">Reply</button><button data-a="rx">React</button>${m.self?'<button data-a="ed">Edit</button>':""}<button data-a="pin">${m.pinned?"Unpin":"Pin"}</button><button data-a="fw">Forward</button><button data-a="cp">Copy</button><button data-a="del">Delete</button></div></div>`}).join("")||'<div class="mu" style="padding:20px">'+(S.cur?"No messages here yet.":"Pick a channel on the left.")+"</div>";
+ if(near||S.fresh){el.scrollTop=1e9;S.fresh=false}}
+const rb=()=>{$("rbar").innerHTML=S.reply?`Replying to ${esc(S.reply.author)} <a href="#" id="rcl" style="color:#ff8a8e">✕</a>`:""};
+const fwOpts=()=>chanOpts()+S.dms.map(d=>`<option value="${d.id}">DM @${esc(d.name)}</option>`).join("");
+async function sendMsg(){const t=$("mi").value.trim();if(!t)return;if(!S.cur)return toast("Pick a channel first");
+ const r=await T(()=>api(`/api/channels/${S.cur.id}/messages`,"POST",{content:t,replyTo:S.reply?S.reply.id:undefined}));if(r){$("mi").value="";S.reply=null;rb();S.fresh=true;loadMsgs(true)}}
+
+/* ---- members ---- */
+const AC=[["kick","Kick"],["ban","Ban"],["timeout","Timeout"],["untimeout","Remove timeout"],["nickname","Set nickname"],["addrole","Add role"],["removerole","Remove role"],["dm","Message"]];
+async function loadMem(){const g=$("ms").value;if(!g){$("mt").innerHTML='<tr><td class="mu">The bot is not in any server yet.</td></tr>';return}
+ $("mt").innerHTML='<tr><td class="mu">Loading…</td></tr>';const soft=p=>p.catch(()=>[]);
+ try{[S.members,S.roles,S.bans]=await Promise.all([api(`/api/guilds/${g}/members`),soft(api(`/api/guilds/${g}/roles`)),soft(api(`/api/guilds/${g}/bans`))])}catch(e){toast(e.message);S.members=[];S.roles=[];S.bans=[]}memR()}
+function memR(){const q=$("mq").value.toLowerCase();
+ $("mt").innerHTML=S.members.map((m,k)=>(m.name+m.username).toLowerCase().includes(q)?`<tr><td class="f">${esc(m.name)}${m.bot?'<span class="tag">BOT</span>':""}${m.timedOut?'<span class="tag">timed out</span>':""}</td><td class="mu">${esc(m.roles.slice(0,3).join(", "))}</td><td><div class="row" style="justify-content:flex-end;flex-wrap:nowrap"><select style="width:160px">${AC.map(a=>`<option value="${a[0]}">${a[1]}</option>`).join("")}</select><button class="nb s" data-m="${k}">Apply</button></div></td></tr>`:"").join("")||'<tr><td class="mu">No members found.</td></tr>';
+ $("bt").innerHTML=S.bans.map(b=>`<tr><td class="f">${esc(b.name)}</td><td class="mu">${esc(b.reason)}</td><td style="text-align:right"><button class="nb s" data-u="${b.id}">Unban</button></td></tr>`).join("")||'<tr><td class="mu">No banned members.</td></tr>'}
+async function doMember(m,a){const g=$("ms").value,body={};
+ if(a=="dm"){const d=await T(()=>api("/api/dm","POST",{userId:m.id}));if(d){await refresh();openThread({id:d.id,title:"Direct message / "+d.name});go("comms")}return}
+ if(a=="kick"||a=="ban"){const r=prompt(a+" "+m.name+"\nReason (optional):","");if(r===null)return;body.reason=r}
+ if(a=="timeout"){const r=prompt("Timeout minutes (max 40320):","10");if(r===null)return;body.minutes=r}
+ if(a=="nickname"){const r=prompt("New nickname (leave blank to reset):","");if(r===null)return;body.nick=r}
+ if(a=="addrole"||a=="removerole"){const n=prompt("Role name:\n"+S.roles.map(r=>r.name).join(", "));if(!n)return;const r=S.roles.find(x=>x.name.toLowerCase()==n.trim().toLowerCase());if(!r)return toast("No role with that name");body.roleId=r.id}
+ if((a=="kick"||a=="ban")&&!confirm(a+" "+m.name+"?"))return;
+ const r=await T(()=>api(`/api/guilds/${g}/members/${m.id}/${a}`,"POST",body),"Done");if(r)loadMem()}
+
+/* ---- commands ---- */
+async function loadCmds(){if(S.cmds)return cmdR();const r=await T(()=>api("/api/commands"));if(r){S.cmds=r;$("s3").textContent=r.length;cmdR()}}
+function cmdR(){const q=$("cq").value.toLowerCase();$("cg").innerHTML=(S.cmds||[]).filter(c=>c.name.includes(q)).map(c=>`<div class="cd"><code>/${esc(c.name)}</code><div>${esc(c.description)}</div><div class="mu">${c.options} option${c.options==1?"":"s"} · ${esc(c.perms)}</div></div>`).join("")||'<div class="mu">No slash commands are registered for this bot yet.</div>'}
+
+function bind(){
+ $("stb").onclick=e=>{const b=e.target.closest("button");if(b)setPres(b.dataset.s,S.me.activity?S.me.activity.type:"Playing",S.me.activity?S.me.activity.text:"")};
+ $("aset").onclick=()=>setPres(S.me.status,$("at").value,$("ax").value.trim());
+ $("aclr").onclick=()=>{$("ax").value="";setPres(S.me.status,"Playing","")};
+ $("tb").onclick=async e=>{const id=e.target.dataset.l;if(!id)return;const g=S.guilds.find(x=>x.id==id);if(!confirm("Make the bot leave "+g.name+"?"))return;await T(()=>api(`/api/guilds/${id}/leave`,"POST"),"Left "+g.name);refresh()};
+ $("sinv").onclick=()=>window.open(S.me.invite,"_blank","noopener");
+ $("side").onclick=async e=>{const k=e.target.dataset.k;if(!k)return;const p=k.split(",");
+  if(k=="new"){const id=(prompt("User ID to message:")||"").trim();if(!id)return;const d=await T(()=>api("/api/dm","POST",{userId:id}));if(d){await refresh();openThread({id:d.id,title:"Direct message / "+d.name})}return}
+  if(p[0]=="c"){const g=S.guilds.find(x=>x.id==p[1]);openThread({id:p[2],title:g.name+" / #"+g.channels.find(c=>c.id==p[2]).name})}
+  else{const d=S.dms.find(x=>x.id==p[1]);openThread({id:d.id,title:"Direct message / "+d.name})}};
+ $("send").onclick=sendMsg;$("mi").onkeydown=e=>{if(e.key==="Enter")sendMsg()};
+ $("rbar").onclick=e=>{if(e.target.id=="rcl"){e.preventDefault();S.reply=null;rb()}};
+ $("msgs").onclick=async e=>{const el=e.target.closest(".msg");if(!el||!S.cur)return;const m=S.msgs.find(x=>x.id==el.dataset.i),a=e.target.dataset.a,r=e.target.dataset.r,base=`/api/channels/${S.cur.id}/messages/${m.id}`;
+  if(r){await T(()=>api(base+"/react","POST",{emoji:r}));return loadMsgs(true)}
+  if(a=="re"){S.reply=m;rb();$("mi").focus()}
+  if(a=="rx"){const em=prompt("Emoji to react with:","👍");if(em){await T(()=>api(base+"/react","POST",{emoji:em}));loadMsgs(true)}}
+  if(a=="ed"){const t=prompt("Edit message:",m.content);if(t&&t.trim()){await T(()=>api(base,"PATCH",{content:t}),"Edited");loadMsgs(true)}}
+  if(a=="pin"){await T(()=>api(base+"/pin","POST"),m.pinned?"Unpinned":"Pinned");loadMsgs(true)}
+  if(a=="del"&&confirm("Delete this message?")){await T(()=>api(base,"DELETE"),"Deleted");loadMsgs(true)}
+  if(a=="cp"){try{navigator.clipboard.writeText(m.content)}catch(x){}toast("Copied")}
+  if(a=="fw"){fw=m;$("fp").textContent=m.author+": "+m.content;$("fs").innerHTML=fwOpts();$("fmo").classList.remove("hidden")}};
+ $("fx").onclick=()=>$("fmo").classList.add("hidden");
+ $("fg").onclick=async()=>{const id=$("fs").value;if(!id)return;await T(()=>api(`/api/channels/${id}/messages`,"POST",{content:"↪ Forwarded from "+fw.author+": "+fw.content}),"Forwarded");$("fmo").classList.add("hidden")};
+ $("ms").onchange=loadMem;$("mq").oninput=memR;$("mre").onclick=loadMem;
+ $("mt").onclick=e=>{const b=e.target.closest("[data-m]");if(b)doMember(S.members[b.dataset.m],b.previousElementSibling.value)};
+ $("bt").onclick=async e=>{const id=e.target.dataset.u;if(!id)return;const r=await T(()=>api(`/api/guilds/${$("ms").value}/bans/${id}`,"DELETE"),"Unbanned");if(r)loadMem()};
+ $("cq").oninput=cmdR;
+ $("cpn").onclick=async e=>{const b=e.target.dataset.b;if(!b)return;const c=$("tc").value,v=$("tv").value.trim();if(!c)return toast("Pick a channel first");
+  if(b=="create"){if(!v)return toast("Enter a channel name");const g=S.guilds.find(x=>x.channels.some(y=>y.id==c));await T(()=>api(`/api/guilds/${g.id}/channels`,"POST",{name:v}),"Channel created");return refresh()}
+  const P={purge:["/purge","POST",{count:+v||10}],slowmode:["/slowmode","POST",{seconds:+v||0}],lock:["/lock","POST",{lock:true}],unlock:["/lock","POST",{lock:false}],rename:["","PATCH",{name:v}],topic:["","PATCH",{topic:v}],delete:["","DELETE"]}[b];
+  if((b=="purge"||b=="delete")&&!confirm(b+" this channel's "+(b=="purge"?"last "+(+v||10)+" messages":"channel")+"?"))return;
+  const r=await T(()=>api(`/api/channels/${c}${P[0]}`,P[1],P[2]),"Done");if(r&&/rename|delete/.test(b))refresh()};
+ $("apn").onclick=async e=>{const b=e.target.dataset.b;if(!b)return;const c=$("ac").value,t=$("atl").value.trim(),d=$("ads").value.trim();if(!c)return toast("Pick a channel first");if(!t&&!d)return toast("Write something first");
+  const body=b=="embed"?{embed:{title:t,description:d,color:$("acl").value.trim()||undefined}}:{content:(t?"**"+t+"**\n":"")+d};
+  const r=await T(()=>api(`/api/channels/${c}/messages`,"POST",body),"Sent");if(r){$("atl").value=$("ads").value=""}};
+ $("pf").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{S.av=r.result;paint();toast("Avatar ready. Press Save to apply.")};r.readAsDataURL(f)};
+ $("psave").onclick=async()=>{const body={name:$("pn").value.trim(),bio:$("pb").value,avatar:S.av||undefined};const r=await T(()=>api("/api/identity","POST",body),"Identity saved");if(r){S.av=null;S.filled=false;refresh()}};
+}
+if(TOK){enter()}
+</script></body></html>
