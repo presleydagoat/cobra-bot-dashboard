@@ -11,12 +11,20 @@ body{background:var(--navy);color:#fff;font:16px/1.6 Inter,system-ui,sans-serif}
 h1,h2,h3,button,label,.f{font-family:'Chakra Petch','Arial Narrow',Impact,sans-serif;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
 button{cursor:pointer;border:0;background:none;color:inherit}
 .hidden{display:none!important}
-.nb{position:relative;border:2px solid currentColor;padding:14px 38px;font-size:14px;--gb:var(--navy);margin:8px}
-.nb::before,.nb::after{content:"";position:absolute;height:5px;width:34px;background:var(--gb)}
-.nb::before{top:-3px;left:62%}.nb::after{bottom:-3px;left:20%}
-.nb:hover{background:#fff;color:var(--navy)}
-.nb.s{padding:8px 18px;font-size:12px;margin:0}.nb.d{color:#ff8a8e}
-.lt .nb:hover{background:var(--navy);color:#fff}
+/* Buttons: outlined rectangle with two gaps in the border. On hover the gaps swap sides (measured from the reference screenshots). */
+.nb{--gw:12px;--t0:67.4%;--t1:27.1%;position:relative;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;height:38px;padding:0 19px;margin:8px;border:0;background:transparent;color:#fff;font-size:15px;line-height:1;letter-spacing:.13em;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.nb::before{content:"";position:absolute;inset:0;border:1px solid currentColor;pointer-events:none;
+ clip-path:polygon(0 0,var(--t0) 0,var(--t0) 3px,calc(var(--t0) + var(--gw)) 3px,calc(var(--t0) + var(--gw)) 0,100% 0,100% 100%,calc(var(--t1) + var(--gw)) 100%,calc(var(--t1) + var(--gw)) calc(100% - 3px),var(--t1) calc(100% - 3px),var(--t1) 100%,0 100%);
+ transition:clip-path .45s cubic-bezier(.65,0,.35,1)}
+.nb:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (hover:hover){.nb:hover{--t0:27.1%;--t1:67.4%}}
+.nb:focus-visible{--t0:27.1%;--t1:67.4%}
+.nb.s{height:30px;padding:0 14px;margin:0;font-size:12px;--gw:8px}.nb.d{color:#ff8a8e}
+/* Scroll reveal: starts invisible and 20px lower, glides up while fading in. Stagger with --d (heading 0s, paragraph .15s, buttons .3s). */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+.nw{background:rgba(255,255,255,.08)}.au img{width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:8px}
 .wm{position:absolute;left:50%;top:50%;width:min(720px,90vw);height:430px;transform:translate(-50%,-50%);fill:#fff;opacity:.06;pointer-events:none}
 input,select,textarea{background:transparent;border:0;border-bottom:2px solid var(--ln);color:#fff;padding:12px 2px;width:100%;font:inherit;border-radius:0}
 select option{background:var(--navy)}
@@ -122,49 +130,53 @@ footer button{display:block;text-align:left;padding:10px 0;font-size:13px}footer
 .mo>div.wide{max-width:520px}
 </style>
 </head><body>
-<section id="login"><div class="lc"><h1>Sign in</h1>
-<div class="fl"><label>Backend URL</label><input id="ub" placeholder="https://cobra.onrender.com" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
-<div class="fl"><label>Username</label><input id="u" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
-<div class="fl"><label>Password</label><input id="p" type="password" autocomplete="current-password"></div>
-<div class="err" id="err"></div><button class="nb" id="go">Sign in</button></div></section>
+<section id="login"><div class="lc"><h1 class="rv">Sign in</h1>
+<div class="fl rv" style="--d:.15s"><label>Backend URL</label><input id="ub" placeholder="https://cobra.onrender.com" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
+<div class="fl rv" style="--d:.15s"><label>Username</label><input id="u" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
+<div class="fl rv" style="--d:.15s"><label>Password</label><input id="p" type="password" autocomplete="current-password"></div>
+<div class="err" id="err"></div><button class="nb rv" style="--d:.3s" id="go">Sign in</button></div></section>
 
 <div id="app" class="hidden">
 <header><div class="br f"><span id="bn"></span></div><nav id="nav"></nav><span class="pill f" id="hp"></span><button class="nb s" id="out">Log out</button></header>
 
 <div class="tab on" id="t-home">
- <div class="sec" style="padding-bottom:0"><div class="in"><div class="row" style="gap:22px"><div class="av" id="hav" style="width:84px;height:84px"></div><div style="flex:1;min-width:220px"><div class="mu f" id="tg"></div><h1 id="hn" style="font-size:clamp(30px,6vw,50px);line-height:1.1"></h1><div class="mu" id="hud"></div></div><button class="nb" data-go="comms">Open messages</button></div></div></div>
- <div class="sec"><div class="in"><h2 class="sh">Overview</h2><div class="st4"><div><b id="s1">-</b><span class="f">Servers</span></div><div><b id="s2">-</b><span class="f">Total members</span></div><div><b id="s3">-</b><span class="f">Chat commands</span></div><div><b id="s5">-</b><span class="f">Open DMs</span></div></div></div></div>
- <div class="sec ch"><div class="in"><h2 class="sh">Presence</h2>
-  <div class="row" id="stb" style="margin-bottom:26px"><button class="sb f" data-s="online"><i class="dot online"></i>Online</button><button class="sb f" data-s="idle"><i class="dot idle"></i>Idle</button><button class="sb f" data-s="dnd"><i class="dot dnd"></i>Do not disturb</button><button class="sb f" data-s="invisible"><i class="dot offline"></i>Offline</button></div>
+ <div class="sec" style="padding-bottom:0"><div class="in"><div class="row" style="gap:22px"><div class="av" id="hav" style="width:84px;height:84px"></div><div style="flex:1;min-width:220px"><div class="mu f" id="tg"></div><h1 class="rv" id="hn" style="font-size:clamp(30px,6vw,50px);line-height:1.1"></h1><div class="mu rv" style="--d:.15s" id="hud"></div></div><button class="nb rv" style="--d:.3s" data-go="comms">Open messages</button></div></div></div>
+ <div class="sec"><div class="in"><h2 class="sh rv">Overview</h2><div class="st4 rv" style="--d:.15s"><div><b id="s1">-</b><span class="f">Servers</span></div><div><b id="s2">-</b><span class="f">Total members</span></div><div><b id="s3">-</b><span class="f">Chat commands</span></div><div><b id="s5">-</b><span class="f">Open DMs</span></div></div></div></div>
+ <div class="sec ch"><div class="in"><h2 class="sh rv">Presence</h2>
+  <div class="row rv" style="--d:.15s;margin-bottom:26px" id="stb"><button class="sb f" data-s="online"><i class="dot online"></i>Online</button><button class="sb f" data-s="idle"><i class="dot idle"></i>Idle</button><button class="sb f" data-s="dnd"><i class="dot dnd"></i>Do not disturb</button><button class="sb f" data-s="invisible"><i class="dot offline"></i>Offline</button></div>
   <div class="row"><select id="at" style="width:190px"><option>Playing</option><option>Listening</option><option>Watching</option><option>Competing</option></select><input id="ax" style="flex:1;min-width:220px" placeholder="Activity text"><button class="nb s" id="aset">Apply</button><button class="nb s d" id="aclr">Clear</button></div></div></div>
 </div>
 
-<div class="tab" id="t-srv"><div class="sec"><div class="in"><h2 class="sh">Servers</h2><table class="tb" id="tb"></table><div style="text-align:center;margin-top:24px"><button class="nb" id="sinv">Add bot to a server</button></div></div></div></div>
+<div class="tab" id="t-srv"><div class="sec"><div class="in"><h2 class="sh rv">Servers</h2><table class="tb" id="tb"></table><div style="text-align:center;margin-top:24px"><button class="nb rv" style="--d:.3s" id="sinv">Add bot to a server</button></div></div></div></div>
 
-<div class="tab" id="t-comms"><div class="sec"><div class="in"><h2 class="sh">Messages</h2>
+<div class="tab" id="t-comms"><div class="sec"><div class="in"><h2 class="sh rv">Messages</h2>
  <div class="chat"><div class="side" id="side"></div><div class="cm"><div class="chh f" id="chh">No channel selected</div><div class="msgs" id="msgs"></div><button id="jump" class="hidden">Jump to latest</button>
  <div class="comp"><div id="rbar"></div><div id="fchips"></div><div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="file" id="fi" multiple class="hidden"><button class="nb s" id="att">Attach</button><textarea id="mi" rows="1" placeholder="Message as the bot (Enter to send, Shift+Enter for a new line)" style="flex:1"></textarea><button class="nb s" id="send">Send</button></div></div></div></div></div></div></div>
 
-<div class="tab" id="t-mem"><div class="sec"><div class="in"><h2 class="sh">Members</h2>
+<div class="tab" id="t-mem"><div class="sec"><div class="in"><h2 class="sh rv">Members</h2>
  <div class="row" style="margin-bottom:14px"><select id="ms" style="width:240px"></select><input id="mq" placeholder="Search members" style="flex:1;min-width:200px"><button class="nb s" id="mre">Reload</button></div>
- <table class="tb" id="mt"></table><h2 class="sh" style="margin-top:56px">Ban list</h2><table class="tb" id="bt"></table></div></div></div>
+ <table class="tb" id="mt"></table><h2 class="sh rv" style="margin-top:56px">Ban list</h2><table class="tb" id="bt"></table></div></div></div>
 
-<div class="tab" id="t-cases"><div class="sec"><div class="in"><h2 class="sh">Moderation cases</h2>
+<div class="tab" id="t-cases"><div class="sec"><div class="in"><h2 class="sh rv">Moderation cases</h2>
  <div class="row" style="margin-bottom:14px"><select id="cs" style="width:240px"></select><select id="ct" style="width:170px"><option value="">All types</option></select><input id="cq2" placeholder="Search user, moderator or reason" style="flex:1;min-width:200px"></div><table class="tb" id="ctb"></table></div></div></div>
 
-<div class="tab" id="t-cmds"><div class="sec"><div class="in"><h2 class="sh">Chat commands</h2><p class="mu" id="cpre" style="text-align:center;margin:-20px 0 26px"></p>
+<div class="tab" id="t-audit"><div class="sec"><div class="in"><h2 class="sh rv">Audit log</h2>
+ <div class="row" style="margin-bottom:14px"><select id="as" style="width:240px"></select><select id="at2" style="width:230px"><option value="">All actions</option></select><input id="aq" placeholder="Search who, target or reason" style="flex:1;min-width:200px"></div>
+ <table class="tb" id="atb"></table><div style="text-align:center;margin-top:20px"><button class="nb hidden" id="amore">Load older</button></div></div></div></div>
+
+<div class="tab" id="t-cmds"><div class="sec"><div class="in"><h2 class="sh rv">Chat commands</h2><p class="mu" id="cpre" style="text-align:center;margin:-20px 0 26px"></p>
  <div class="row" style="margin-bottom:14px"><select id="cgs" style="width:240px"></select><input id="cq" placeholder="Search commands" style="flex:1;min-width:200px"></div><div class="row" id="cf" style="margin-bottom:8px"></div><div class="cg" id="cg"></div></div></div></div>
 
-<div class="tab" id="t-tools"><div class="sec"><div class="in"><h2 class="sh">Channel tools</h2><div class="cg" style="margin-top:0">
+<div class="tab" id="t-tools"><div class="sec"><div class="in"><h2 class="sh rv">Channel tools</h2><div class="cg" style="margin-top:0">
  <div class="cd" id="cpn"><h3 class="f">Manage a channel</h3><select id="tc"></select><input id="tv" placeholder="Value (amount, seconds, or name)"><div class="row"><button class="nb s" data-b="purge">Purge</button><button class="nb s" data-b="slowmode">Slowmode</button><button class="nb s" data-b="lock">Lock</button><button class="nb s" data-b="unlock">Unlock</button><button class="nb s" data-b="rename">Rename</button><button class="nb s" data-b="topic">Set topic</button><button class="nb s" data-b="create">Create channel</button><button class="nb s d" data-b="delete">Delete</button></div></div>
  <div class="cd" id="apn"><h3 class="f">Send an announcement</h3><select id="ac"></select><input id="atl" placeholder="Title"><textarea id="ads" rows="3" placeholder="Message" style="width:100%"></textarea><input id="acl" placeholder="Color (hex, e.g. #2b3a67)"><div class="row"><button class="nb s" data-b="embed">Send as embed</button><button class="nb s" data-b="plain">Send as plain text</button></div></div>
 </div></div></div></div>
 
-<div class="tab" id="t-set"><div class="sec"><div class="in"><h2 class="sh">Server settings</h2><div class="fg"><select id="sgs"></select><div class="two" id="sform"></div>
+<div class="tab" id="t-set"><div class="sec"><div class="in"><h2 class="sh rv">Server settings</h2><div class="fg"><select id="sgs"></select><div class="two" id="sform"></div>
  <h3 class="f" style="margin-top:16px">Reason templates (one per line)</h3><p class="mu" style="margin-top:-10px">Used in the ban, kick, timeout, warn and unban windows, and in chat with -t NUMBER, like .ban @user -t 2</p><div class="two" id="tform"></div>
  <div><button class="nb" id="ssave">Save settings</button></div></div></div></div></div>
 
-<div class="tab" id="t-id"><div class="sec"><div class="in"><h2 class="sh">Bot identity</h2><div class="fm">
+<div class="tab" id="t-id"><div class="sec"><div class="in"><h2 class="sh rv">Bot identity</h2><div class="fm">
  <div class="row" style="gap:24px"><div class="av" id="pav" style="width:110px;height:110px"></div><div><input type="file" id="pf" accept="image/*" class="hidden"><button class="nb s" onclick="pf.click()">Change avatar</button></div></div>
  <div><label class="mu">Username</label><input id="pn"></div><div><label class="mu">Bio (application description)</label><textarea id="pb" rows="4" maxlength="400"></textarea></div>
  <div><button class="nb" id="psave">Save</button></div><p class="mu">Discord limits how often a bot can change its username and avatar.</p></div></div></div></div>
@@ -179,7 +191,7 @@ const $=i=>document.getElementById(i),esc=s=>String(s==null?"":s).replace(/[&<>"
 const toast=t=>{const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove("on"),2400)};
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}};
 let API=ls("cobra-api")||DEFAULT_API,TOK="";try{TOK=sessionStorage.getItem("cobra-tok")||""}catch(e){}
-const S={me:null,guilds:[],dms:[],cur:null,reply:null,msgs:[],members:[],roles:[],bans:[],cfg:{},cmds:[],cases:[],tab:"home",filled:false,av:null,unread:{},files:[],noMore:false,stick:true,newc:0,es:null,cat:""};
+const S={audit:[],auditEnd:false,auditTypes:null,me:null,guilds:[],dms:[],cur:null,reply:null,msgs:[],members:[],roles:[],bans:[],cfg:{},cmds:[],cases:[],tab:"home",filled:false,av:null,unread:{},files:[],noMore:false,stick:true,newc:0,es:null,cat:""};
 let fw=null,mod=null;
 async function api(p,m,b){const r=await fetch(API+p,{method:m||"GET",headers:Object.assign({"Content-Type":"application/json"},TOK?{Authorization:"Bearer "+TOK}:{}),body:b?JSON.stringify(b):undefined});
  if(r.status===401){try{sessionStorage.removeItem("cobra-tok")}catch(e){}toast("Session expired. Sign in again.");setTimeout(()=>location.reload(),1200);throw new Error("Session expired")}
@@ -199,9 +211,9 @@ async function doLogin(){let b=$("ub").value.trim();if(!b)return err("Enter your
 $("go").onclick=doLogin;$("p").onkeydown=e=>{if(e.key==="Enter")doLogin()};
 $("out").onclick=()=>{try{sessionStorage.removeItem("cobra-tok")}catch(e){}location.reload()};
 
-const NAV=[["home","Overview"],["srv","Servers"],["comms","Messages"],["mem","Members"],["cases","Cases"],["cmds","Commands"],["tools","Tools"],["set","Settings"],["id","Identity"]];
+const NAV=[["home","Overview"],["srv","Servers"],["comms","Messages"],["mem","Members"],["cases","Cases"],["audit","Audit log"],["cmds","Commands"],["tools","Tools"],["set","Settings"],["id","Identity"]];
 function go(t){S.tab=t;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x.id=="t-"+t));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go==t));scrollTo(0,0);
- if(t=="comms"){const el=$("msgs");if(S.stick)el.scrollTop=el.scrollHeight;updJump()}if(t=="mem")loadMem();if(t=="cases")loadCases();if(t=="cmds")loadCmds();if(t=="set")loadSet()}
+ if(t=="comms"){const el=$("msgs");if(S.stick)el.scrollTop=el.scrollHeight;updJump()}if(t=="mem")loadMem();if(t=="cases")loadCases();if(t=="audit")loadAudit(true);if(t=="cmds")loadCmds();if(t=="set")loadSet()}
 document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)go(g.dataset.go)});
 
 async function enter(){$("login").classList.add("hidden");$("app").classList.remove("hidden");
@@ -212,7 +224,7 @@ async function enter(){$("login").classList.add("hidden");$("app").classList.rem
 async function refresh(){const[me,g,d]=await Promise.all([api("/api/me"),api("/api/guilds"),api("/api/dms")]);S.me=me;S.guilds=g;S.dms=d;paint();srvT();side();fillSel();
  if(!S.cmdN){const gid=g[0]&&g[0].id;if(gid)soft(api(`/api/guilds/${gid}/commands`),[]).then(c=>{S.cmdN=c.length;$("s3").textContent=c.length})}}
 const chanOpts=()=>S.guilds.map(g=>g.channels.map(c=>`<option value="${c.id}">${esc(g.name)} #${esc(c.name)}</option>`).join("")).join("");
-function fillSel(){const ids=["ms","cs","cgs","sgs"],v=ids.map(i=>$(i).value),o=S.guilds.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("");
+function fillSel(){const ids=["ms","cs","cgs","sgs","as"],v=ids.map(i=>$(i).value),o=S.guilds.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("");
  ids.forEach((i,k)=>{$(i).innerHTML=o;if(v[k])$(i).value=v[k]});
  const t=[$("tc").value,$("ac").value];$("tc").innerHTML=$("ac").innerHTML=chanOpts();if(t[0])$("tc").value=t[0];if(t[1])$("ac").value=t[1]}
 function paint(){const m=S.me;if(!m)return;const st={online:"Online",idle:"Idle",dnd:"Do not disturb",invisible:"Offline",offline:"Offline"}[m.status]||m.status,sk=m.status=="invisible"?"offline":m.status;
@@ -235,6 +247,7 @@ function onEvent(d){const cur=S.cur&&S.cur.id;
   else if(!m.self){S.unread[m.ch]=(S.unread[m.ch]||0)+1;side()}}
  if(d.t=="upd"&&cur==d.m.ch){const i=S.msgs.findIndex(x=>x.id==d.m.id);if(i>=0){S.msgs[i]=d.m;msgR({})}}
  if(d.t=="del"&&cur==d.ch){S.msgs=S.msgs.filter(x=>x.id!=d.id);msgR({})}
+ if(d.t=="audit"&&S.tab=="audit"&&$("as").value==d.g&&(!$("at2").value||+$("at2").value==d.e.type)&&!S.audit.find(x=>x.id==d.e.id)){d.e.nw=1;S.audit.unshift(d.e);auditR()}
  if(d.t=="bulk"&&cur==d.ch){S.msgs=S.msgs.filter(x=>!d.ids.includes(x.id));msgR({})}}
 
 /* ---------- messages ---------- */
@@ -299,6 +312,18 @@ async function doMember(m,a){const g=$("ms").value;
  if(a=="addrole"||a=="removerole"){const n=prompt("Role name:\n"+S.roles.map(r=>r.name).join(", "));if(!n)return;const r=S.roles.find(x=>x.name.toLowerCase()==n.trim().toLowerCase());if(!r)return toast("No role with that name");body.roleId=r.id}
  if(a=="untimeout"&&!confirm("Remove the timeout from "+m.name+"?"))return;
  const r=await T(()=>api(`/api/guilds/${g}/members/${m.id}/${a}`,"POST",body),"Done");if(r)loadMem()}
+
+/* ---------- audit log ---------- */
+const pretty=a=>String(a).replace(/([a-z])([A-Z])/g,"$1 $2");
+async function loadAudit(reset){const g=$("as").value;if(!g){$("atb").innerHTML='<tr><td class="mu">The bot is not in any server yet.</td></tr>';return}
+ if(!S.auditTypes){S.auditTypes=await soft(api("/api/audit-types"));$("at2").innerHTML='<option value="">All actions</option>'+S.auditTypes.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join("")}
+ if(reset){S.audit=[];S.auditEnd=false}
+ const ty=$("at2").value,before=!reset&&S.audit.length?S.audit[S.audit.length-1].id:"";
+ try{const l=await api(`/api/guilds/${g}/audit?limit=50${ty?"&type="+ty:""}${before?"&before="+before:""}`);S.audit=reset?l:S.audit.concat(l);if(l.length<50)S.auditEnd=true;auditR()}
+ catch(e){$("atb").innerHTML=`<tr><td class="mu">${esc(e.message)}. The bot needs the View Audit Log permission.</td></tr>`}}
+function auditR(){const q=$("aq").value.toLowerCase();
+ $("atb").innerHTML=S.audit.filter(e=>((e.by?e.by.name:"")+e.target+e.reason+e.action).toLowerCase().includes(q)).map(e=>`<tr class="${e.nw?"nw":""}"><td class="mu" style="width:150px">${new Date(e.time).toLocaleString()}</td><td class="au f">${e.by?`<img src="${esc(e.by.avatar)}" alt="">${esc(e.by.name)}`:'<span class="mu">Unknown</span>'}</td><td><span class="tag" style="margin:0">${esc(pretty(e.action))}</span></td><td>${esc(e.target)}<div class="mu" style="font-size:12px">${esc(e.targetId)}</div></td><td>${esc(e.reason)||'<span class="mu">-</span>'}${e.changes.length?`<div class="mu" style="font-size:12px;margin-top:4px">${e.changes.map(c=>esc(c.key+": "+(c.old||"none")+" → "+(c.new||"none"))).join("<br>")}</div>`:""}</td></tr>`).join("")||'<tr><td class="mu">No audit log entries found.</td></tr>';
+ $("amore").classList.toggle("hidden",S.auditEnd||!S.audit.length)}
 
 /* ---------- cases, commands, settings ---------- */
 async function loadCases(){const g=$("cs").value;if(!g){$("ctb").innerHTML='<tr><td class="mu">The bot is not in any server yet.</td></tr>';return}
@@ -365,6 +390,7 @@ function bind(){
  $("mno").onclick=()=>$("mmo").classList.add("hidden");
  $("mok").onclick=async()=>{const b={reason:$("mr").value.trim()||undefined};if($("mdays"))b.days=+$("mdays").value;if($("mdur"))b.minutes=+$("mdur").value;
   const r=await T(()=>api(`/api/guilds/${$("ms").value}/members/${mod.id}/${mod.type}`,"POST",b));if(r){toast(TITLE[mod.type]+" done"+(r.n?" (case #"+r.n+")":""));$("mmo").classList.add("hidden");loadMem()}};
+ $("as").onchange=$("at2").onchange=()=>loadAudit(true);$("aq").oninput=auditR;$("amore").onclick=()=>loadAudit(false);
  $("cs").onchange=loadCases;$("ct").onchange=caseR;$("cq2").oninput=caseR;
  $("cgs").onchange=loadCmds;$("cq").oninput=cmdR;
  $("cf").onclick=e=>{const c=e.target.dataset.c;if(c){S.cat=c=="All"?"":c;cmdR()}};
@@ -382,5 +408,7 @@ function bind(){
  $("pf").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{S.av=r.result;paint();toast("Avatar ready. Press Save to apply.")};r.readAsDataURL(f)};
  $("psave").onclick=async()=>{const body={name:$("pn").value.trim(),bio:$("pb").value,avatar:S.av||undefined};const r=await T(()=>api("/api/identity","POST",body),"Identity saved");if(r){S.av=null;S.filled=false;refresh()}};
 }
+const rvo=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rvo.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".rv").forEach(el=>rvo.observe(el));
 if(TOK){enter()}
 </script></body></html>
